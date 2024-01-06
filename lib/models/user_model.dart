@@ -5,6 +5,7 @@ class UserModel {
   String address;
   int zipcode;
   String city;
+  String email;
   String roleId;
 
   UserModel({
@@ -14,6 +15,7 @@ class UserModel {
     required this.address,
     required this.zipcode,
     required this.city,
+    required this.email,
     required this.roleId,
   });
 
@@ -25,6 +27,7 @@ class UserModel {
       address: json['address'],
       zipcode: json['zipcode'],
       city: json['city'],
+      email: json['email'],
       roleId: json['role_id'],
     );
   }
@@ -36,6 +39,12 @@ class UserModel {
         'address': address,
         'zipcode': zipcode,
         'city': city,
+        'email': email,
         'role_id': roleId,
       };
+
+  @override
+  String toString() {
+    return 'UserModel{id: $id, last_name: $lastName, first_name: $firstName, address: $address, zipcode: $zipcode, city: $city, email: $email, role_id: $roleId,}';
+  }
 }

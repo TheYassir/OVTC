@@ -1,7 +1,4 @@
-import 'dart:io';
-
-import 'package:http/http.dart';
-import 'package:ovtc_app/models/auth_model.dart';
+// import 'package:ovtc_app/models/auth_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;

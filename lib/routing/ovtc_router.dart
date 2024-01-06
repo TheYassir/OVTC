@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:ovtc_app/pages/home_page.dart';
@@ -6,30 +5,25 @@ import 'package:ovtc_app/pages/login_page.dart';
 import 'package:ovtc_app/pages/register_page.dart';
 
 class OVTCRouter {
+  static const String home = '/';
+  static const String login = '/login';
+  static const String register = '/register';
+
   static final GoRouter router = GoRouter(
-    initialLocation: '/register',
+    initialLocation: login,
     routes: [
       GoRoute(
-        path: '/login',
-        builder: (context, state) => LoginPage(),
+        path: login,
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/register',
-        builder: (context, state) => RegisterPage(),
-      ),
-      GoRoute(
-        path: '/',
+        path: home,
         builder: (context, state) => const HomePage(),
-        routes: const [
-          // GoRoute(
-          //   path: 'vehicle',
-          //   builder: (context, state) {
-          //     VehicleModel vehicle = state.extra as VehicleModel;
-          //     return VehiclePage(vehicle: vehicle);
-          //   },
-          // )
-        ],
-      )
+      ),
+      GoRoute(
+        path: register,
+        builder: (context, state) => const RegisterPage(),
+      ),
     ],
   );
 }

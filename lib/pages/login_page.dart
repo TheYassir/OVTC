@@ -17,6 +17,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  void clearText(TextEditingController controller) {
+    if (controller.text.isNotEmpty) controller.clear();
+  }
+
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,13 +34,22 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // if (state.user != null) {
-        //   context.go(OVTCRouter.home);
-        // }
+        if (state.auth != null) {
+          // Don't work
+          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
+          context.go(OVTCRouter.home);
+        }
         if (state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Erreur d'authentification : ${state.errorMessage}"),
-          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Center(
+                  child: Text(
+                state.errorMessage.toString(),
+                style: const TextStyle(fontSize: 18),
+              )),
+              backgroundColor: Colors.red[900],
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -74,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _emailController,
                         autofocus: true,
                         autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -85,40 +99,49 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Email*',
+                          suffixIcon: Focus(
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () => clearText(_emailController),
+                            ),
+                          ),
                         )),
                     const SizedBox(height: 10),
                     TextFormField(
                         controller: _passwordController,
                         obscureText: true,
                         autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.visiblePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter strong password';
+                            return 'Please enter your password';
                           }
-                          if (value.length < 8) {
-                            return 'Please enter more than 8 characters';
-                          }
-                          if (!value.contains(RegExp(r'(\d+)'))) {
-                            return 'Please enter numbers characters';
-                          }
-                          // if (!value.contains(RegExp(
-                          //     r'^`!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?~$'))) {
-                          //   return 'Please enter specials characters';
-                          // }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Password*',
+                          suffixIcon: Focus(
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () => clearText(_passwordController),
+                            ),
+                          ),
                         )),
                     const SizedBox(height: 16),
                     TextButton(
                         onPressed: () {
-                          context.push('/register');
+                          // Don't work
+                          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
+                          context.go(OVTCRouter.register);
                         },
                         child: Text(
                           "Don't have an account yet ? Create one",
@@ -139,6 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                 ));
+                            _emailController.clear();
+                            _passwordController.clear();
                           }
                         },
                         child: const Text('Login'),

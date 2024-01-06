@@ -43,3 +43,5 @@ class AuthRegisterEvent extends AuthEvent {
 }
 
 class AuthLogoutEvent extends AuthEvent {}
+
+class AuthDeleteErrorMessageEvent extends AuthEvent {}

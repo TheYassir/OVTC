@@ -38,4 +38,9 @@ class MissionModel {
         'customer_id': customerId,
         'driver_id': driverId,
       };
+
+  @override
+  String toString() {
+    return 'MissionModel{id: $id, addressStart: $addressStart, addressEnd: $addressEnd, dateStart: $dateStart, price: $price, customerId: $customerId, driverId: $driverId}';
+  }
 }

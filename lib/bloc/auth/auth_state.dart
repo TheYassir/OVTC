@@ -1,36 +1,41 @@
 part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
-  final AuthModel? user;
+  final AuthModel? auth;
   final String? errorMessage;
   final bool isLoading;
 
   const AuthState({
-    required this.user,
+    required this.auth,
     required this.errorMessage,
     required this.isLoading,
   });
 
   AuthState copyWith({
-    AuthModel? user,
+    AuthModel? auth,
     String? errorMessage,
     bool? isLoading,
   }) {
     return AuthState(
-      user: user ?? this.user,
+      auth: auth ?? this.auth,
       errorMessage: errorMessage ?? this.errorMessage,
       isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [auth, errorMessage, isLoading];
+
+  @override
+  String toString() {
+    return 'AuthState{auth: $auth, errorMessage: $errorMessage, isLoading: $isLoading}';
+  }
 }
 
 class AuthInitialState extends AuthState {
   const AuthInitialState()
       : super(
-          user: null,
+          auth: null,
           errorMessage: null,
           isLoading: false,
         );

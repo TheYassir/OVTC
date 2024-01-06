@@ -22,4 +22,9 @@ class ChannelModel {
         'last_update': lastUpdate,
         'title': title,
       };
+
+  @override
+  String toString() {
+    return 'ChannelModel{id: $id, lastUpdate: $lastUpdate, title: $title}';
+  }
 }

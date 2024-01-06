@@ -18,4 +18,9 @@ class AuthModel {
         'id': id,
         'email': email,
       };
+
+  @override
+  String toString() {
+    return 'AuthModel{id: $id, email: $email}';
+  }
 }

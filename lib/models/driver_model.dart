@@ -26,4 +26,9 @@ class DriverModel {
         'siren': siren,
         'user_id': userId,
       };
+
+  @override
+  String toString() {
+    return 'DriverModel{id: $id, companyName: $companyName, siren: $siren, userId: $userId}';
+  }
 }

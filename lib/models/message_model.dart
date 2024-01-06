@@ -34,4 +34,9 @@ class MessageModel {
         'user_id': userId,
         'channel_id': channelId,
       };
+
+  @override
+  String toString() {
+    return 'MessageModel{id: $id, createdAt: $createdAt, content: $content, contentType: $contentType, userId: $userId, channelId: $channelId}';
+  }
 }

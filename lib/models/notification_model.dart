@@ -26,4 +26,9 @@ class NotificationModel {
         'is_new': isNew,
         'user_id': userId,
       };
+
+  @override
+  String toString() {
+    return 'NotificationModel{id: $id, content: $content, isNew: $isNew, userId: $userId}';
+  }
 }

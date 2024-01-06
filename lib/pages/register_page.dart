@@ -17,6 +17,10 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
   }
 
+  void clearText(TextEditingController controller) {
+    if (controller.text.isNotEmpty) controller.clear();
+  }
+
   final validCharacters = RegExp(r'^[a-zA-Z0-9_\-=@,\.;]+$');
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -39,13 +43,21 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.user != null) {
-          context.go('/');
+        if (state.auth != null) {
+          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
+          context.go(OVTCRouter.home);
         }
         if (state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Erreur d'authentification : ${state.errorMessage}"),
-          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Center(
+                  child: Text(
+                state.errorMessage.toString(),
+                style: const TextStyle(fontSize: 18),
+              )),
+              backgroundColor: Colors.red[900],
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -85,6 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 10),
                     DropdownButtonFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your role';
@@ -113,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _emailController,
                         autofocus: true,
                         autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -124,15 +138,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Email*',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () => clearText(_emailController),
+                          ),
                         )),
                     const SizedBox(height: 10),
                     TextFormField(
                         controller: _passwordController,
                         obscureText: true,
                         autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.visiblePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -150,9 +169,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           // }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Password*',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () => clearText(_passwordController),
+                          ),
                         )),
                     const SizedBox(height: 10),
                     Row(
@@ -162,6 +185,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextFormField(
                               controller: _lastNameController,
                               autocorrect: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               keyboardType: TextInputType.name,
                               validator: (value) {
                                 if (value == null ||
@@ -172,9 +197,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
                                 labelText: 'Last Name*',
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () =>
+                                      clearText(_lastNameController),
+                                ),
                               )),
                         ),
                         const SizedBox(width: 10),
@@ -183,6 +213,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextFormField(
                               controller: _firstNameController,
                               autocorrect: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               keyboardType: TextInputType.name,
                               validator: (value) {
                                 if (value == null ||
@@ -193,9 +225,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
                                 labelText: 'First Name*',
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () =>
+                                      clearText(_firstNameController),
+                                ),
                               )),
                         ),
                       ],
@@ -204,6 +241,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                         controller: _addressController,
                         autocorrect: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.streetAddress,
                         validator: (value) {
                           if (value == null ||
@@ -214,9 +252,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Address*',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () => clearText(_addressController),
+                          ),
                         )),
                     const SizedBox(height: 16),
                     Row(
@@ -226,6 +268,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextFormField(
                               controller: _cityController,
                               autocorrect: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null ||
                                     value.isEmpty ||
@@ -235,9 +279,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
                                 labelText: 'City*',
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () => clearText(_cityController),
+                                ),
                               )),
                         ),
                         const SizedBox(width: 10),
@@ -247,6 +295,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               controller: _zipcodeController,
                               keyboardType: TextInputType.number,
                               autocorrect: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null ||
                                     value.isEmpty ||
@@ -258,9 +308,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
                                 labelText: 'Zipcode*',
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () =>
+                                      clearText(_zipcodeController),
+                                ),
                               )),
                         ),
                       ],
@@ -275,6 +330,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: TextFormField(
                                   controller: _companyNameController,
                                   autocorrect: false,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value == null ||
                                         value.isEmpty ||
@@ -284,9 +341,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                     }
                                     return null;
                                   },
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
                                     labelText: 'Company name*',
+                                    suffixIcon: IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () =>
+                                          clearText(_companyNameController),
+                                    ),
                                   )),
                             ),
                             const SizedBox(width: 10),
@@ -296,6 +358,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   controller: _sirenController,
                                   keyboardType: TextInputType.number,
                                   autocorrect: false,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value == null ||
                                         value.isEmpty ||
@@ -307,9 +371,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                     }
                                     return null;
                                   },
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
                                     labelText: 'Siren*',
+                                    suffixIcon: IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () =>
+                                          clearText(_sirenController),
+                                    ),
                                   )),
                             ),
                           ],
@@ -320,7 +389,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     }),
                     TextButton(
                         onPressed: () {
-                          context.push('/login');
+                          // context
+                          //     .read<AuthBloc>()
+                          //     .add(AuthDeleteErrorMessageEvent());
+                          context.go(OVTCRouter.login);
                         },
                         child: Text(
                           "Have an account ? Log in",
@@ -349,6 +421,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                   companyName: _companyNameController.text,
                                   siren: _sirenController.text,
                                 ));
+                            _emailController.clear();
+                            _passwordController.clear();
+                            _lastNameController.clear();
+                            _firstNameController.clear();
+                            _addressController.clear();
+                            _zipcodeController.clear();
+                            _cityController.clear();
+                            _companyNameController.clear();
+                            _sirenController.clear();
                           }
                         },
                         child: const Text('Register'),
