@@ -35,11 +35,13 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.auth != null) {
-          // Don't work
-          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
           context.go(OVTCRouter.home);
         }
         if (state.errorMessage != null) {
+          // Display bug snackbar
+          // ScaffoldMessenger.of(context).clearSnackBars();
+          // ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Center(
@@ -139,8 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     TextButton(
                         onPressed: () {
-                          // Don't work
-                          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
                           context.go(OVTCRouter.register);
                         },
                         child: Text(
@@ -162,8 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                 ));
-                            _emailController.clear();
-                            _passwordController.clear();
+                            // _emailController.clear();
+                            // _passwordController.clear();
                           }
                         },
                         child: const Text('Login'),

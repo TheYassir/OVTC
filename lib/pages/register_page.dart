@@ -44,10 +44,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.auth != null) {
-          // context.read<AuthBloc>().add(AuthDeleteErrorMessageEvent());
           context.go(OVTCRouter.home);
         }
         if (state.errorMessage != null) {
+          // Display bug snackbar
+          // ScaffoldMessenger.of(context).clearSnackBars();
+          // ScaffoldMessenger.of(context).removeCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Center(
@@ -56,6 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 style: const TextStyle(fontSize: 18),
               )),
               backgroundColor: Colors.red[900],
+              showCloseIcon: true,
             ),
           );
         }
@@ -141,9 +144,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Email*',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () => clearText(_emailController),
+                          suffixIcon: Focus(
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () => clearText(_emailController),
+                            ),
                           ),
                         )),
                     const SizedBox(height: 10),
@@ -172,9 +179,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Password*',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () => clearText(_passwordController),
+                          suffixIcon: Focus(
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () => clearText(_passwordController),
+                            ),
                           ),
                         )),
                     const SizedBox(height: 10),
@@ -200,10 +211,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 labelText: 'Last Name*',
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () =>
-                                      clearText(_lastNameController),
+                                suffixIcon: Focus(
+                                  descendantsAreFocusable: false,
+                                  canRequestFocus: false,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () =>
+                                        clearText(_lastNameController),
+                                  ),
                                 ),
                               )),
                         ),
@@ -228,10 +243,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 labelText: 'First Name*',
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () =>
-                                      clearText(_firstNameController),
+                                suffixIcon: Focus(
+                                  descendantsAreFocusable: false,
+                                  canRequestFocus: false,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () =>
+                                        clearText(_firstNameController),
+                                  ),
                                 ),
                               )),
                         ),
@@ -255,9 +274,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Address*',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () => clearText(_addressController),
+                          suffixIcon: Focus(
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () => clearText(_addressController),
+                            ),
                           ),
                         )),
                     const SizedBox(height: 16),
@@ -282,9 +305,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 labelText: 'City*',
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () => clearText(_cityController),
+                                suffixIcon: Focus(
+                                  descendantsAreFocusable: false,
+                                  canRequestFocus: false,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () => clearText(_cityController),
+                                  ),
                                 ),
                               )),
                         ),
@@ -311,10 +338,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 labelText: 'Zipcode*',
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () =>
-                                      clearText(_zipcodeController),
+                                suffixIcon: Focus(
+                                  descendantsAreFocusable: false,
+                                  canRequestFocus: false,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () =>
+                                        clearText(_zipcodeController),
+                                  ),
                                 ),
                               )),
                         ),
@@ -344,10 +375,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
                                     labelText: 'Company name*',
-                                    suffixIcon: IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () =>
-                                          clearText(_companyNameController),
+                                    suffixIcon: Focus(
+                                      descendantsAreFocusable: false,
+                                      canRequestFocus: false,
+                                      child: IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () =>
+                                            clearText(_companyNameController),
+                                      ),
                                     ),
                                   )),
                             ),
@@ -374,10 +409,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
                                     labelText: 'Siren*',
-                                    suffixIcon: IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () =>
-                                          clearText(_sirenController),
+                                    suffixIcon: Focus(
+                                      descendantsAreFocusable: false,
+                                      canRequestFocus: false,
+                                      child: IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () =>
+                                            clearText(_sirenController),
+                                      ),
                                     ),
                                   )),
                             ),
@@ -389,9 +428,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     }),
                     TextButton(
                         onPressed: () {
-                          // context
-                          //     .read<AuthBloc>()
-                          //     .add(AuthDeleteErrorMessageEvent());
                           context.go(OVTCRouter.login);
                         },
                         child: Text(
@@ -421,15 +457,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                   companyName: _companyNameController.text,
                                   siren: _sirenController.text,
                                 ));
-                            _emailController.clear();
-                            _passwordController.clear();
-                            _lastNameController.clear();
-                            _firstNameController.clear();
-                            _addressController.clear();
-                            _zipcodeController.clear();
-                            _cityController.clear();
-                            _companyNameController.clear();
-                            _sirenController.clear();
+                            // _emailController.clear();
+                            // _passwordController.clear();
+                            // _lastNameController.clear();
+                            // _firstNameController.clear();
+                            // _addressController.clear();
+                            // _zipcodeController.clear();
+                            // _cityController.clear();
+                            // _companyNameController.clear();
+                            // _sirenController.clear();
                           }
                         },
                         child: const Text('Register'),
