@@ -76,22 +76,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               )));
     });
 
-    on<AuthLogoutEvent>((AuthLogoutEvent event, Emitter<AuthState> emit) async {
-      emit(state.copyWith(isLoading: true));
-      await AuthService.logout()
-          .then((value) => emit(state.copyWith(
-                auth: null,
-                isLoading: false,
-              )))
-          .catchError((onError) => emit(state.copyWith(
-                errorMessage: onError.toString(),
-                isLoading: false,
-              )));
-      ;
+    on<AuthLogoutEvent>((AuthLogoutEvent event, Emitter<AuthState> emit) {
+      AuthService.logout();
+      emit(const AuthInitialState());
     });
 
     on<AuthDeleteErrorMessageEvent>(
         (AuthDeleteErrorMessageEvent event, Emitter<AuthState> emit) =>
-            emit(state.copyWith(errorMessage: null)));
+            emit(state.copyWith(errorMessage: " ")));
   }
 }

@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
+import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 
-class TalkPage extends StatelessWidget {
-  final String channelId;
-
-  const TalkPage({super.key, required this.channelId});
+class ChannelsPage extends StatelessWidget {
+  const ChannelsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +32,13 @@ class TalkPage extends StatelessWidget {
         },
         child: Scaffold(
             appBar: const OVTCAppBar(),
-            // bottomNavigationBar: OVTC,
+            bottomNavigationBar: const OVTCBottomBar(),
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
-                    return const Text("Talk Une discussion avec une personne");
+                    return const Text("Channels TOUT LES conv");
                   },
                 ),
               ),

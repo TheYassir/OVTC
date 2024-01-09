@@ -457,15 +457,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                   companyName: _companyNameController.text,
                                   siren: _sirenController.text,
                                 ));
-                            // _emailController.clear();
-                            // _passwordController.clear();
-                            // _lastNameController.clear();
-                            // _firstNameController.clear();
-                            // _addressController.clear();
-                            // _zipcodeController.clear();
-                            // _cityController.clear();
-                            // _companyNameController.clear();
-                            // _sirenController.clear();
+                            _emailController.clear();
+                            _passwordController.clear();
+                            _lastNameController.clear();
+                            _firstNameController.clear();
+                            _addressController.clear();
+                            _zipcodeController.clear();
+                            _cityController.clear();
+                            _companyNameController.clear();
+                            _sirenController.clear();
                           }
                         },
                         child: const Text('Register'),

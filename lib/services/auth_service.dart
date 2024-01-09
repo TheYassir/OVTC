@@ -131,12 +131,12 @@ class AuthService {
     }
   }
 
-  static logout() async {
+  static Future<void> logout() async {
     try {
       await supabase.auth.signOut();
     } catch (e) {
       print("[AuthService] Logout: ${e.toString()}");
-      rethrow;
+      throw Exception(e.toString());
     }
   }
 }

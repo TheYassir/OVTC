@@ -5,18 +5,20 @@ import 'package:ovtc_app/pages/home_page.dart';
 import 'package:ovtc_app/pages/login_page.dart';
 import 'package:ovtc_app/pages/notifications_page.dart';
 import 'package:ovtc_app/pages/register_page.dart';
-import 'package:ovtc_app/pages/talk_page.dart';
-import 'package:ovtc_app/pages/talks_page.dart';
+import 'package:ovtc_app/pages/messages_page.dart';
+import 'package:ovtc_app/pages/channels_page.dart';
 
 class OVTCRouter {
   static const String home = '/';
   static const String login = '/login';
   static const String register = '/register';
   static const String account = '/account';
+  static const String notifications = '/notifications';
+  static const String channels = '/channels';
+  static const String messages = '/messages';
 
   static final GoRouter router = GoRouter(
-    // Changer pour Login
-    initialLocation: home,
+    initialLocation: login,
     routes: [
       GoRoute(
         path: login,
@@ -27,29 +29,29 @@ class OVTCRouter {
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-          path: home,
-          builder: (context, state) => const HomePage(),
-          routes: [
-            GoRoute(
-              path: account,
-              builder: (context, state) => const AccountPage(),
-            ),
-            GoRoute(
-              path: account,
-              builder: (context, state) => const NotificationsPage(),
-            ),
-            GoRoute(
-                path: account,
-                builder: (context, state) => const TalksPage(),
-                routes: [
-                  GoRoute(
-                    path: account,
-                    builder: (context, state) => const TalkPage(
-                      channelId: "ID",
-                    ),
-                  ),
-                ]),
-          ]),
+        path: home,
+        builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: account,
+        builder: (context, state) => AccountPage(
+          authId: state.extra as String,
+        ),
+      ),
+      GoRoute(
+        path: notifications,
+        builder: (context, state) => const NotificationsPage(),
+      ),
+      GoRoute(
+        path: channels,
+        builder: (context, state) => const ChannelsPage(),
+      ),
+      GoRoute(
+        path: messages,
+        builder: (context, state) => const MessagesPage(
+          channelId: "ID",
+        ),
+      ),
     ],
   );
 }

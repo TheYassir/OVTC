@@ -5,8 +5,10 @@ import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 
-class TalksPage extends StatelessWidget {
-  const TalksPage({super.key});
+class MessagesPage extends StatelessWidget {
+  final String channelId;
+
+  const MessagesPage({super.key, required this.channelId});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class TalksPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
-                    return const Text("TALKS TOUT LES MESSAGES");
+                    return const Text("Talk Une discussion avec une personne");
                   },
                 ),
               ),

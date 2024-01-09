@@ -1,37 +1,38 @@
 part of 'app_bloc.dart';
 
 class AppState extends Equatable {
-  final UserModel? user;
   final bool isDarkMode;
+  final int navbarIndex;
 
   const AppState({
-    required this.user,
     required this.isDarkMode,
+    required this.navbarIndex,
   });
 
   AppState copyWith({
     UserModel? user,
     bool? isDarkMode,
+    int? navbarIndex,
   }) {
     return AppState(
-      user: user ?? this.user,
       isDarkMode: isDarkMode ?? this.isDarkMode,
+      navbarIndex: navbarIndex ?? this.navbarIndex,
     );
   }
 
   @override
-  List<Object?> get props => [user, isDarkMode];
+  List<Object?> get props => [isDarkMode, navbarIndex];
 
   @override
   String toString() {
-    return 'AppState{user: $user, isDarkMode: $isDarkMode}';
+    return 'AppState{isDarkMode: $isDarkMode, navbarIndex: $navbarIndex}';
   }
 }
 
 class AppInitialState extends AppState {
   const AppInitialState()
       : super(
-          user: null,
           isDarkMode: false,
+          navbarIndex: 0,
         );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
+import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,7 +13,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          state.toString();
           if (state.errorMessage != null) {
             // Display bug
             // ScaffoldMessenger.of(context).clearSnackBars();
@@ -29,18 +29,15 @@ class HomePage extends StatelessWidget {
             );
           }
         },
-        child: Scaffold(
-            appBar: const OVTCAppBar(),
-            // bottomNavigationBar: OVTC,
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) {
-                    return const Text("Home Formulaire mission");
-                  },
-                ),
-              ),
-            )));
+        child: const Scaffold(
+          appBar: OVTCAppBar(),
+          bottomNavigationBar: OVTCBottomBar(),
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Home Formulaire mission"),
+            ),
+          ),
+        ));
   }
 }

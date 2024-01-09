@@ -6,10 +6,8 @@ abstract class AppEvent {
 
 class ThemeToggleEvent extends AppEvent {}
 
-class AuthToUserEvent extends AppEvent {
-  final String id;
+class NavbarIndexEvent extends AppEvent {
+  final int navbarIndex;
 
-  const AuthToUserEvent({
-    required this.id,
-  });
+  NavbarIndexEvent({required this.navbarIndex});
 }

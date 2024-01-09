@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
+import 'package:ovtc_app/utils/ovtc_theme.dart';
 import '../bloc/auth/auth_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,6 +35,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
+        _emailController.text = "miaaaou78@gmail.com";
+        _passwordController.text = "rissay78";
         if (state.auth != null) {
           context.go(OVTCRouter.home);
         }
@@ -162,8 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                 ));
-                            // _emailController.clear();
-                            // _passwordController.clear();
+                            _emailController.clear();
+                            _passwordController.clear();
                           }
                         },
                         child: const Text('Login'),

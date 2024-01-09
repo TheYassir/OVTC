@@ -1,6 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ovtc_app/bloc/account/account_bloc.dart';
+import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
+import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'routing/ovtc_router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -14,20 +18,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        AuthBloc authBloc = AuthBloc();
-        authBloc.add(InitializeSupabaseEvent());
-        return authBloc;
-      },
-      child: MaterialApp.router(
-        title: 'OVTC',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-          useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (BuildContext context) =>
+              AuthBloc()..add(InitializeSupabaseEvent()),
         ),
-        debugShowCheckedModeBanner: false,
-        routerConfig: OVTCRouter.router,
+        BlocProvider<AppBloc>(
+          create: (BuildContext context) => AppBloc(),
+        ),
+      ],
+      child: BlocBuilder<AppBloc, AppState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: state.isDarkMode
+                  ? OVTCTheme.colorSchemeDark
+                  : OVTCTheme.colorScheme,
+            ),
+            routerConfig: OVTCRouter.router,
+          );
+        },
       ),
     );
   }

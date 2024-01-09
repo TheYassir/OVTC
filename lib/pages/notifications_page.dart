@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
+import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 
 class NotificationsPage extends StatelessWidget {
@@ -31,7 +32,7 @@ class NotificationsPage extends StatelessWidget {
         },
         child: Scaffold(
             appBar: const OVTCAppBar(),
-            // bottomNavigationBar: OVTC,
+            bottomNavigationBar: const OVTCBottomBar(),
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
