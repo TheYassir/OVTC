@@ -7,6 +7,7 @@ import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
+import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'package:ovtc_app/widgets/account_card_widget.dart';
 
 class AccountPage extends StatelessWidget {
@@ -14,7 +15,6 @@ class AccountPage extends StatelessWidget {
   final String authId;
   @override
   Widget build(BuildContext context) {
-    print("AUth ID AccoundPage: $authId");
     return BlocProvider(
         lazy: false,
         create: (context) => AccountBloc()..add(AuthToUserEvent(id: authId)),
@@ -32,24 +32,47 @@ class AccountPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 18.0, top: 2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'My account',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
                     BlocBuilder<AccountBloc, AccountState>(
                         builder: (context, state) {
-                      if (state.user != null) {
-                        return const CircularProgressIndicator();
+                      if (state.user == null) {
+                        return const Padding(
+                          padding: EdgeInsets.all(24.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
                       } else {
+                        Map<String, dynamic> data = state.user!.toJson();
+
+                        if (state.driver != null) {
+                          data.addAll(state.driver!.toJson());
+                        }
+                        data.removeWhere((key, value) => key.contains("id"));
+
                         return Expanded(
                           child: ListView.builder(
-                              itemCount: state.user?.toJson().length,
+                              itemCount: data.length,
                               itemBuilder: (context, index) {
                                 return AccountCard(
-                                    data: state.user!
-                                        .toJson()
-                                        .entries
-                                        .elementAt(index));
+                                    data: data.entries.elementAt(index));
                               }),
                         );
                       }
                     }),
+                    const Divider(
+                      color: OVTCTheme.primaryColor,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -67,10 +90,33 @@ class AccountPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Center(
+                                    child: Text(
+                                  "This feature has not yet been created. It will have to change the account cards by replacing them with fields for modification.",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                )),
+                                backgroundColor: Colors.teal,
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.teal,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3.0),
+                            ),
+                          ),
+                          child: const Text('Edit'),
+                        ),
                         ElevatedButton(
                           onPressed: () {
                             context.read<AuthBloc>().add(AuthLogoutEvent());

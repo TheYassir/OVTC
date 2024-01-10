@@ -16,12 +16,11 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       await UserService.getCurrentUser(
         id: event.id,
       )
-          .then((value) => emit(
-                state.copyWith(
-                    isLoading: false,
-                    user: value.first as UserModel,
-                    driver: value.elementAtOrNull(1) as DriverModel),
-              ))
+          .then((value) => emit(state.copyWith(
+                user: value.first as UserModel,
+                driver: value.elementAtOrNull(1) as DriverModel,
+                isLoading: false,
+              )))
           .catchError((onError) => emit(state.copyWith(
                 accountErrorMessage: onError.toString(),
                 isLoading: false,
