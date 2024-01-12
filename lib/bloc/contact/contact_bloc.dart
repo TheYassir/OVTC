@@ -26,5 +26,36 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
                 isLoading: false,
               )));
     });
+
+    on<AddContactEvent>(
+        (AddContactEvent event, Emitter<ContactState> emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      await ContactService.addContact(
+        senderId: event.senderId,
+        receiverId: event.receiverId,
+      )
+          .then((value) => emit(state.copyWith(
+                isLoading: false,
+              )))
+          .catchError((onError) => emit(state.copyWith(
+                contactErrorMessage: onError.toString(),
+                isLoading: false,
+              )));
+      ;
+    });
+
+    on<ResponseContactEvent>(
+        (ResponseContactEvent event, Emitter<ContactState> emit) async {
+      ContactService.responseContact(
+        userId: event.userId,
+        otherUserId: event.otherUserId,
+        contactId: event.contactId,
+        accepted: event.accepted,
+        blocked: event.blocked,
+      );
+
+      // Envoi d'une requete de creation d'une conversation channels
+    });
   }
 }

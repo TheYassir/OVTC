@@ -26,6 +26,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AppBloc>(
           create: (BuildContext context) => AppBloc(),
         ),
+        BlocProvider<ContactBloc>(
+          create: (BuildContext context) => ContactBloc(),
+        ),
       ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {

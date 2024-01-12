@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class UserService {
-  static Future<List<Object?>> getCurrentUser({required id}) async {
+  static Future<List<Object?>> getCurrentUser({required String id}) async {
     try {
       final Map<String, dynamic> response =
           await supabase.from('users').select().eq('id', id).single();

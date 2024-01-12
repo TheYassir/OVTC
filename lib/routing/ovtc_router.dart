@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/pages/account_page.dart';
+import 'package:ovtc_app/pages/add_contact_page.dart';
+import 'package:ovtc_app/pages/contact_page.dart';
 
 import 'package:ovtc_app/pages/home_page.dart';
 import 'package:ovtc_app/pages/login_page.dart';
@@ -16,6 +18,9 @@ class OVTCRouter {
   static const String notifications = '/notifications';
   static const String channels = '/channels';
   static const String messages = '/messages';
+  static const String contact = '/contact';
+
+  static const String addContact = '/add';
 
   static final GoRouter router = GoRouter(
     initialLocation: login,
@@ -51,6 +56,14 @@ class OVTCRouter {
         builder: (context, state) => const MessagesPage(
           channelId: "ID",
         ),
+      ),
+      GoRoute(
+        path: contact,
+        builder: (context, state) => const ContactPage(),
+      ),
+      GoRoute(
+        path: addContact,
+        builder: (context, state) => const AddContactPage(),
       ),
     ],
   );

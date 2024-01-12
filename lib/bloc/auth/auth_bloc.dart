@@ -82,7 +82,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<AuthDeleteErrorMessageEvent>(
-        (AuthDeleteErrorMessageEvent event, Emitter<AuthState> emit) =>
-            emit(state.copyWith(errorMessage: " ")));
+        (AuthDeleteErrorMessageEvent event, Emitter<AuthState> emit) => emit(
+            AuthState(auth: state.auth, isLoading: false, errorMessage: null)));
   }
 }

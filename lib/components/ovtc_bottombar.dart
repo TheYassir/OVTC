@@ -14,7 +14,8 @@ class OVTCBottomBar extends StatelessWidget {
       builder: (context, stateApp) {
         String? currentPath = GoRouterState.of(context).path;
         Color selectedColor = (currentPath == OVTCRouter.account ||
-                currentPath == OVTCRouter.messages
+                currentPath == OVTCRouter.messages ||
+                currentPath == OVTCRouter.addContact
             ? Colors.white
             : OVTCTheme.secondaryColor);
 
@@ -32,6 +33,10 @@ class OVTCBottomBar extends StatelessWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.phone),
+              label: 'Contact',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.message),
               label: 'Channels',
             ),
@@ -46,12 +51,14 @@ class OVTCBottomBar extends StatelessWidget {
             switch (index) {
               case 0:
                 context.go(OVTCRouter.home);
-
                 break;
               case 1:
-                context.go(OVTCRouter.channels);
+                context.go(OVTCRouter.contact);
                 break;
               case 2:
+                context.go(OVTCRouter.channels);
+                break;
+              case 3:
                 context.go(OVTCRouter.notifications);
                 break;
             }

@@ -153,24 +153,24 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         )),
                     const SizedBox(height: 16),
-                    if (authState.isLoading) const CircularProgressIndicator(),
-                    if (!authState.isLoading)
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
-                        ),
-                        onPressed: () {
-                          if (_formkey.currentState!.validate()) {
-                            context.read<AuthBloc>().add(AuthLoginEvent(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ));
-                            _emailController.clear();
-                            _passwordController.clear();
-                          }
-                        },
-                        child: const Text('Login'),
-                      ),
+                    authState.isLoading
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(50),
+                            ),
+                            onPressed: () {
+                              if (_formkey.currentState!.validate()) {
+                                context.read<AuthBloc>().add(AuthLoginEvent(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    ));
+                                _emailController.clear();
+                                _passwordController.clear();
+                              }
+                            },
+                            child: const Text('Login'),
+                          ),
                   ],
                 ),
               );

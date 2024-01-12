@@ -1,6 +1,6 @@
 class ContactModel {
   String id;
-  String createdAt;
+  String? createdAt;
   bool isPending;
   bool isAccepted;
   bool isBlocked;

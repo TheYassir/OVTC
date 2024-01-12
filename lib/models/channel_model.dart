@@ -1,12 +1,12 @@
 class ChannelModel {
-  int id;
-  String lastUpdate;
-  String title;
+  String id;
+  String? lastUpdate;
+  String? title;
 
   ChannelModel({
     required this.id,
-    required this.lastUpdate,
-    required this.title,
+    this.lastUpdate,
+    this.title,
   });
 
   factory ChannelModel.fromJson(Map<String, dynamic> json) {
