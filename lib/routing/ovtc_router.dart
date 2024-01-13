@@ -59,7 +59,7 @@ class OVTCRouter {
       ),
       GoRoute(
         path: contact,
-        builder: (context, state) => const ContactPage(),
+        builder: (context, state) => ContactPage(authId: state.extra as String),
       ),
       GoRoute(
         path: addContact,

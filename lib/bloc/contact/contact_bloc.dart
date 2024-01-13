@@ -16,9 +16,9 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
         userId: event.userId,
       )
           .then((value) => emit(state.copyWith(
-                contacts: value.first,
-                pendingContacts: value.elementAtOrNull(1),
-                blockedContacts: value.elementAtOrNull(2),
+                contacts: value["contacts"],
+                pendingContacts: value["pendingContacts"],
+                blockedContacts: value["blockedContacts"],
                 isLoading: false,
               )))
           .catchError((onError) => emit(state.copyWith(

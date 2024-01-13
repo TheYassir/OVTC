@@ -6,26 +6,26 @@ import 'package:uuid/uuid.dart';
 final supabase = Supabase.instance.client;
 
 class ContactService {
-  static Future<List<List<ContactModel>?>> getAllContacts(
+  static Future<Map<String, List<ContactModel>>> getAllContacts(
       {required String userId}) async {
     try {
-      final List<Map<String, dynamic>> response =
-          await supabase.from('contacts').select().eq('sender_id', userId);
+      final List<Map<String, dynamic>> response = await supabase
+          .from('contacts')
+          .select('''*,detailOtherUser:receiver_id(id, first_name, last_name, role_id, email)''').eq(
+              'sender_id', userId);
+      final List<Map<String, dynamic>> receiverResponse = await supabase
+          .from('contacts')
+          .select('''*,detailOtherUser:receiver_id(id, first_name, last_name, role_id, email)''').eq(
+              'receiver_id', userId);
 
-      final List<Map<String, dynamic>> receiverResponse =
-          await supabase.from('contacts').select().eq('receiver_id', userId);
-
-      // if (response.isEmpty) {
-      //   throw Exception("500: Internal server error");
-      // }
-      print("[ContactService] response: ${response.toString()}");
-      print(
-          "[ContactService] receiverResponse: ${receiverResponse.toString()}");
-
+      // print("Error on response : ${response.toString()}");
+      // print("Error on receiverResponse : ${receiverResponse.toString()}");
       response.addAll(receiverResponse);
 
       final List<ContactModel> allContacts =
           response.map((contact) => ContactModel.fromJson(contact)).toList();
+
+      // print("Error on allContacts to list : ${allContacts.toString()}");
 
       final List<ContactModel> blockedContacts =
           (allContacts.where((element) => element.isBlocked == true)).toList();
@@ -34,8 +34,12 @@ class ContactService {
       final List<ContactModel> contacts = (allContacts.where((element) =>
           element.isAccepted == true && element.isBlocked == false)).toList();
 
-      final value = [contacts, pendingContacts, blockedContacts];
-      print("[ContactService] value: ${value.toString()}");
+      final value = {
+        "contacts": contacts,
+        "pendingContacts": pendingContacts,
+        "blockedContacts": blockedContacts
+      };
+      // print("Error on value : ${value.toString()}");
       return value;
     } catch (e) {
       print("[ContactService] getAllContacts: ${e.toString()}");
@@ -56,16 +60,7 @@ class ContactService {
         receiverId: receiverId,
       );
 
-      // try {
       await supabase.from('contacts').insert(newContact.toJson());
-      // } catch (e) {
-      //   Exception("500: Internal server error");
-      // }
-
-      // if (response.isEmpty) {
-      //   throw Exception("500: Internal server error");
-      // }
-      print("[ContactService] insert: added");
     } catch (e) {
       print("[ContactService] addContact: ${e.toString()}");
       rethrow;

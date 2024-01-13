@@ -1,3 +1,5 @@
+import 'package:ovtc_app/models/detail_other_user.dart';
+
 class ContactModel {
   String id;
   String? createdAt;
@@ -6,6 +8,7 @@ class ContactModel {
   bool isBlocked;
   String senderId;
   String receiverId;
+  DetailOtherUserModel? detailOtherUser;
 
   ContactModel({
     required this.id,
@@ -15,6 +18,7 @@ class ContactModel {
     required this.isBlocked,
     required this.senderId,
     required this.receiverId,
+    this.detailOtherUser,
   });
 
   factory ContactModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +30,7 @@ class ContactModel {
       isBlocked: json['is_blocked'],
       senderId: json['sender_id'],
       receiverId: json['receiver_id'],
+      detailOtherUser: DetailOtherUserModel.fromJson(json['detailOtherUser']),
     );
   }
 
@@ -37,10 +42,11 @@ class ContactModel {
         'is_blocked': isBlocked,
         'sender_id': senderId,
         'receiver_id': receiverId,
+        'detailOtherUserl': detailOtherUser!.toJson(),
       };
 
   @override
   String toString() {
-    return 'ContactModel{id: $id, createdAt: $createdAt, isPending: $isPending,isAccepted: $isAccepted, isBlocked: $isBlocked, senderId: $senderId, receiverId: $receiverId}';
+    return 'ContactModel{id: $id, createdAt: $createdAt, isPending: $isPending,isAccepted: $isAccepted, isBlocked: $isBlocked, senderId: $senderId, receiverId: $receiverId, detailOtherUserModel: $detailOtherUser}';
   }
 }

@@ -12,7 +12,9 @@ import 'package:ovtc_app/widgets/account_card_widget.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key, required this.authId});
+
   final String authId;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

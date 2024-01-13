@@ -4,7 +4,6 @@ class ContactState extends Equatable {
   final List<ContactModel>? contacts;
   final List<ContactModel>? pendingContacts;
   final List<ContactModel>? blockedContacts;
-
   final bool isLoading;
   final String? contactErrorMessage;
 
@@ -43,7 +42,7 @@ class ContactState extends Equatable {
 
   @override
   String toString() {
-    return 'ContactState{contact: $contacts,pendingContacts: $pendingContacts, blockedContacts: $blockedContacts, isLoading: $isLoading, driver: $contactErrorMessage}';
+    return 'ContactState{contact: $contacts, pendingContacts: $pendingContacts, blockedContacts: $blockedContacts, isLoading: $isLoading, contactErrorMessage: $contactErrorMessage}';
   }
 }
 
@@ -53,6 +52,6 @@ class ContactInitialState extends ContactState {
             contacts: null,
             pendingContacts: null,
             blockedContacts: null,
-            isLoading: false,
+            isLoading: true,
             contactErrorMessage: null);
 }
