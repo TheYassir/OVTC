@@ -2,6 +2,7 @@ import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/services/channel_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:uuid/validation.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -15,7 +16,7 @@ class ContactService {
               'sender_id', userId);
       final List<Map<String, dynamic>> receiverResponse = await supabase
           .from('contacts')
-          .select('''*,detailOtherUser:receiver_id(id, first_name, last_name, role_id, email)''').eq(
+          .select('''*,detailOtherUser:sender_id(id, first_name, last_name, role_id, email)''').eq(
               'receiver_id', userId);
 
       // print("Error on response : ${response.toString()}");
@@ -50,9 +51,35 @@ class ContactService {
   static Future addContact(
       {required String senderId, required String receiverId}) async {
     try {
+      // [Feature] Possibility to add with email
+      // [Security] Search how to verify UUID in Dart/Flutter
+      // if (UuidValidation.isValidUUID(fromString: receiverId)) {
+      //   throw Exception("Not valid entry. Expected identifier");
+      // }
+
+      final List<Map<String, dynamic>> alreadyCreated = await supabase
+          .from('contacts')
+          .select()
+          .eq('sender_id', senderId)
+          .eq('receiver_id', receiverId);
+
+      if (alreadyCreated.isNotEmpty) {
+        throw Exception("Contact request already sent");
+      }
+
+      final List<Map<String, dynamic>> alreadyReceive = await supabase
+          .from('contacts')
+          .select()
+          .eq('sender_id', receiverId)
+          .eq('receiver_id', senderId);
+
+      if (alreadyReceive.isNotEmpty) {
+        throw Exception("Contact request already received");
+      }
+
       ContactModel newContact = ContactModel(
         id: const Uuid().v4(),
-        createdAt: null,
+        createdAt: DateTime.now().toIso8601String(),
         isPending: true,
         isAccepted: false,
         isBlocked: false,
@@ -61,6 +88,7 @@ class ContactService {
       );
 
       await supabase.from('contacts').insert(newContact.toJson());
+      print("[ContactService] addContact send");
     } catch (e) {
       print("[ContactService] addContact: ${e.toString()}");
       rethrow;
@@ -85,10 +113,10 @@ class ContactService {
             .from('contacts')
             .update({'is_accepted': true, 'is_pending': false}).match(
                 {'id': contactId});
+
         ChannelService.createChannelAfterContact(
             userId: userId, otherUserId: otherUserId);
       }
-      // getAllContacts(userId: userId);
     } catch (e) {
       print("[ContactService] responseContact: ${e.toString()}");
       rethrow;

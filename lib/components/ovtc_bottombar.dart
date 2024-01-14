@@ -60,7 +60,7 @@ class OVTCBottomBar extends StatelessWidget {
                     context.go(OVTCRouter.contact, extra: authState.auth!.id);
                     break;
                   case 2:
-                    context.go(OVTCRouter.channels);
+                    context.go(OVTCRouter.channels, extra: authState.auth!.id);
                     break;
                   case 3:
                     context.go(OVTCRouter.notifications);

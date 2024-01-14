@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
         );
       }
     }, builder: (context, state) {
-      ContactBloc().add(LoadAllContactsEvent(userId: state.auth!.id));
+      // ContactBloc().add(LoadAllContactsEvent(userId: state.auth!.id));
 
       return const Scaffold(
         appBar: OVTCAppBar(),

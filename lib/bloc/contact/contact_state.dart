@@ -52,6 +52,6 @@ class ContactInitialState extends ContactState {
             contacts: null,
             pendingContacts: null,
             blockedContacts: null,
-            isLoading: true,
+            isLoading: false,
             contactErrorMessage: null);
 }

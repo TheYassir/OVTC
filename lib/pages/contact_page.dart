@@ -6,6 +6,7 @@ import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
+import 'package:ovtc_app/widgets/contact_card_pending_widget.dart';
 import 'package:ovtc_app/widgets/contact_card_widget.dart';
 import 'package:ovtc_app/widgets/contact_title_widget.dart';
 
@@ -16,25 +17,6 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocConsumer<ContactBloc, ContactState>(
-    //   listener: (context, state) {
-    //     if (state.contactErrorMessage != null) {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Center(
-    //               child: Text(
-    //             state.contactErrorMessage.toString(),
-    //             style: const TextStyle(fontSize: 18),
-    //           )),
-    //           backgroundColor: Colors.red[900],
-    //         ),
-    //       );
-    //     }
-    //   },
-    //   builder: (context, state) {
-    //     ContactBloc().add(LoadAllContactsEvent(userId: authId));
-    //     print("Print STate = ${state.toString()}");
-    //     return
     return BlocProvider(
         lazy: false,
         create: (context) =>
@@ -55,7 +37,6 @@ class ContactPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            print("Print STate = ${state.toString()}");
             return Scaffold(
                 appBar: const OVTCAppBar(),
                 bottomNavigationBar: const OVTCBottomBar(),
@@ -83,20 +64,19 @@ class ContactPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            state.contacts!.isEmpty
+                            state.contacts?.firstOrNull == null
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
                                       "Empty contact list ! Add new contacts using the button at the bottom of the page.",
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.black,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   )
                                 : Expanded(
-                                    flex: 3,
+                                    flex: 2,
                                     child: ListView.builder(
                                         itemCount: state.contacts!.length,
                                         itemBuilder: (context, index) {
@@ -114,14 +94,13 @@ class ContactPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            state.pendingContacts!.isEmpty
+                            state.pendingContacts?.firstOrNull == null
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
                                       "Empty pending contact list !",
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.black,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -132,7 +111,8 @@ class ContactPage extends StatelessWidget {
                                         itemCount:
                                             state.pendingContacts!.length,
                                         itemBuilder: (context, index) {
-                                          return ContactCard(
+                                          return ContactPendingCard(
+                                              authId: authId,
                                               data: state
                                                   .pendingContacts![index]);
                                         }),
@@ -146,20 +126,19 @@ class ContactPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            state.blockedContacts!.isEmpty
+                            state.blockedContacts?.firstOrNull == null
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
                                       "Empty blocked contact list !",
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.black,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   )
                                 : Expanded(
-                                    flex: 3,
+                                    flex: 1,
                                     child: ListView.builder(
                                         itemCount:
                                             state.blockedContacts!.length,

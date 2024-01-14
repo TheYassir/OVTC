@@ -49,7 +49,8 @@ class OVTCRouter {
       ),
       GoRoute(
         path: channels,
-        builder: (context, state) => const ChannelsPage(),
+        builder: (context, state) =>
+            ChannelsPage(authId: state.extra as String),
       ),
       GoRoute(
         path: messages,

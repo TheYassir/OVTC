@@ -6,15 +6,17 @@ import 'package:uuid/uuid.dart';
 final supabase = Supabase.instance.client;
 
 class ChannelService {
-  static void createChannelAfterContact(
+  static Future createChannelAfterContact(
       {required String userId, required String otherUserId}) async {
     try {
       String channelId = const Uuid().v4();
-      ChannelModel newChannel = ChannelModel(id: channelId);
+      ChannelModel newChannel = ChannelModel(
+        id: channelId,
+        title: null,
+        lastUpdate: DateTime.now().toIso8601String(),
+      );
       try {
-        await supabase
-            .from('channels')
-            .insert(newChannel.toJson(), defaultToNull: true);
+        await supabase.from('channels').insert(newChannel.toJson());
       } catch (e) {
         print("[ChannelService] insert new channel: ${e.toString()}");
         throw Exception("500: Internal server error");
@@ -34,9 +36,36 @@ class ChannelService {
         throw Exception("500: Internal server error");
       }
 
-      print("[ChannelService] insert: good");
+      print("[ChannelService] createChannelAfterContact: good");
     } catch (e) {
       print("[ChannelService] createChannelAfterContact: ${e.toString()}");
+      rethrow;
+    }
+  }
+
+  static Future<List<ChannelModel>?> getAllChannels(
+      {required String authId}) async {
+    try {
+      final List<Map<String, dynamic>> userChannelResponse = await supabase
+          .from('users_channels')
+          .select('channel_id')
+          .eq('user_id', authId);
+
+      // userChannelResponse.map((channelId) async => {
+      //   <Map<String, dynamic> response = await supabase
+      //     .from('channels')
+      //     .select()
+      //     .eq('id', channelId)
+      // });
+
+      print("userChannelResponse : ${userChannelResponse.toString()}");
+      // print("Error on receiverResponse : ${receiverResponse.toString()}");
+
+      List<ChannelModel>? channels;
+      // print("Error on value : ${value.toString()}");
+      return channels;
+    } catch (e) {
+      print("[ChannelService] getAllChannel: ${e.toString()}");
       rethrow;
     }
   }

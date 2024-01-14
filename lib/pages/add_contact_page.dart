@@ -34,12 +34,12 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return BlocListener<ContactBloc, ContactState>(
       listener: (context, state) {
-        _identifierController.text = "miaaaou78@gmail.com";
+        // _identifierController.text = "e7b4e8b7-ca59-42f7-9dac-7eb9ab5f90aa";
 
         if (state.contactErrorMessage != null) {
           // Display bug snackbar
-          // ScaffoldMessenger.of(context).clearSnackBars();
-          // ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -122,6 +122,16 @@ class _AddContactPageState extends State<AddContactPage> {
                                               _identifierController.text,
                                         ));
                                     _identifierController.clear();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Center(
+                                            child: Text(
+                                          "Contact Request sent",
+                                          style: TextStyle(fontSize: 18),
+                                        )),
+                                        backgroundColor: Colors.green[900],
+                                      ),
+                                    );
                                   }
                                 },
                                 child: const Text('Add'),

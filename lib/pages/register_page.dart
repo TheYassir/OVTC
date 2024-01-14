@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import '../bloc/auth/auth_bloc.dart';
 
@@ -111,13 +112,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: OutlineInputBorder(),
                           labelText: 'Who are you ?*',
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
-                              value: "9cf60c0b-7920-40f1-a693-4f6c0a0c581a",
-                              child: Text("Driver")),
+                              value: RoleModel().driverId,
+                              child: const Text("Driver")),
                           DropdownMenuItem(
-                              value: "cb545524-18bb-4e53-8527-456e904d00c1",
-                              child: Text("Customer")),
+                              value: RoleModel().customerId,
+                              child: const Text("Customer")),
                         ],
                         onChanged: (val) {
                           setState(() {

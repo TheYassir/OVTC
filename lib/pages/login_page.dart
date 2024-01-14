@@ -67,9 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.local_taxi_rounded,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: OVTCTheme.primaryColor,
                       size: 60,
                     ),
                     Text(

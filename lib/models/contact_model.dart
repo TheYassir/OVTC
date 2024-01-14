@@ -2,7 +2,7 @@ import 'package:ovtc_app/models/detail_other_user.dart';
 
 class ContactModel {
   String id;
-  String? createdAt;
+  dynamic? createdAt;
   bool isPending;
   bool isAccepted;
   bool isBlocked;
@@ -12,7 +12,7 @@ class ContactModel {
 
   ContactModel({
     required this.id,
-    required this.createdAt,
+    this.createdAt,
     required this.isPending,
     required this.isAccepted,
     required this.isBlocked,
@@ -42,7 +42,6 @@ class ContactModel {
         'is_blocked': isBlocked,
         'sender_id': senderId,
         'receiver_id': receiverId,
-        'detailOtherUserl': detailOtherUser!.toJson(),
       };
 
   @override
