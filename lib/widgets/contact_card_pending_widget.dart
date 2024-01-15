@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
 import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/models/role_model.dart';
-import 'package:ovtc_app/utils/ovtc_theme.dart';
+import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/string_casing_extension.dart';
 
 class ContactPendingCard extends StatelessWidget {
@@ -52,6 +53,10 @@ class ContactPendingCard extends StatelessWidget {
                                                 accepted: true,
                                                 blocked: false,
                                               ));
+
+                                          context.read<AppBloc>().add(
+                                              NavbarIndexEvent(navbarIndex: 0));
+                                          context.go(OVTCRouter.home);
                                         },
                                         icon: const Icon(
                                           Icons.check_circle_outline_rounded,
@@ -72,6 +77,10 @@ class ContactPendingCard extends StatelessWidget {
                                                 accepted: false,
                                                 blocked: false,
                                               ));
+
+                                          context.read<AppBloc>().add(
+                                              NavbarIndexEvent(navbarIndex: 0));
+                                          context.go(OVTCRouter.home);
                                         },
                                         icon: Icon(
                                           Icons.highlight_off_rounded,
@@ -92,6 +101,10 @@ class ContactPendingCard extends StatelessWidget {
                                                 accepted: false,
                                                 blocked: true,
                                               ));
+
+                                          context.read<AppBloc>().add(
+                                              NavbarIndexEvent(navbarIndex: 0));
+                                          context.go(OVTCRouter.home);
                                         },
                                         icon: const Icon(
                                           Icons.block_rounded,
@@ -123,7 +136,7 @@ class ContactPendingCard extends StatelessWidget {
                 const Divider(),
                 // const SizedBox(height: 8),
                 Text(
-                  "Created on ${data.createdAt!.split('T').first.replaceAll('-', '/')}",
+                  "Created on ${data.createdAt.toIso8601String().split('T').first.replaceAll('-', '/')}",
                 ),
                 data.senderId == authId
                     ? const Text(

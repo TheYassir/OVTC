@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ContactTitle extends StatelessWidget {
-  const ContactTitle({super.key, required this.title});
+class OVTCTitle extends StatelessWidget {
+  const OVTCTitle({super.key, required this.title});
 
   final String title;
 

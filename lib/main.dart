@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
+import 'package:ovtc_app/bloc/channel/channel_bloc.dart';
 import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'routing/ovtc_router.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ContactBloc>(
           create: (BuildContext context) => ContactBloc(),
+        ),
+        BlocProvider<ChannelBloc>(
+          create: (BuildContext context) => ChannelBloc(),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(

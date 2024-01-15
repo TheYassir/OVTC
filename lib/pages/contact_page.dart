@@ -8,7 +8,7 @@ import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'package:ovtc_app/widgets/contact_card_pending_widget.dart';
 import 'package:ovtc_app/widgets/contact_card_widget.dart';
-import 'package:ovtc_app/widgets/contact_title_widget.dart';
+import 'package:ovtc_app/components/ovtc_title_widget.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key, required this.authId});
@@ -60,7 +60,7 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ContactTitle(title: "Contact list"),
+                                  OVTCTitle(title: "Contact list"),
                                 ],
                               ),
                             ),
@@ -78,6 +78,7 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 2,
                                     child: ListView.builder(
+                                        reverse: true,
                                         itemCount: state.contacts!.length,
                                         itemBuilder: (context, index) {
                                           return ContactCard(
@@ -89,8 +90,7 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ContactTitle(
-                                      title: "Contact request pending"),
+                                  OVTCTitle(title: "Contact request pending"),
                                 ],
                               ),
                             ),
@@ -108,6 +108,7 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 3,
                                     child: ListView.builder(
+                                        reverse: true,
                                         itemCount:
                                             state.pendingContacts!.length,
                                         itemBuilder: (context, index) {
@@ -122,7 +123,7 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ContactTitle(title: "Blocked contacts list"),
+                                  OVTCTitle(title: "Blocked contacts list"),
                                 ],
                               ),
                             ),
@@ -140,6 +141,7 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 1,
                                     child: ListView.builder(
+                                        reverse: true,
                                         itemCount:
                                             state.blockedContacts!.length,
                                         itemBuilder: (context, index) {

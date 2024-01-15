@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/services/contact_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'contact_event.dart';
 part 'contact_state.dart';
@@ -36,6 +37,11 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
         receiverId: event.receiverId,
       )
           .then((value) => emit(state.copyWith(
+                isLoading: false,
+              )))
+          .onError<PostgrestException>((error, _) => emit(state.copyWith(
+                contactErrorMessage:
+                    "Wrong request check the given identifier.",
                 isLoading: false,
               )))
           .catchError((onError) => emit(state.copyWith(

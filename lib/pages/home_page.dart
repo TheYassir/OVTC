@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
-import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
-import 'package:ovtc_app/routing/ovtc_router.dart';
-import 'package:ovtc_app/utils/ovtc_theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

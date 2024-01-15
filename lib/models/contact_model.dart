@@ -2,7 +2,7 @@ import 'package:ovtc_app/models/detail_other_user.dart';
 
 class ContactModel {
   String id;
-  dynamic? createdAt;
+  DateTime createdAt;
   bool isPending;
   bool isAccepted;
   bool isBlocked;
@@ -12,7 +12,7 @@ class ContactModel {
 
   ContactModel({
     required this.id,
-    this.createdAt,
+    required this.createdAt,
     required this.isPending,
     required this.isAccepted,
     required this.isBlocked,
@@ -24,7 +24,7 @@ class ContactModel {
   factory ContactModel.fromJson(Map<String, dynamic> json) {
     return ContactModel(
       id: json['id'],
-      createdAt: json['created_at'],
+      createdAt: DateTime.parse(json['created_at']),
       isPending: json['is_pending'],
       isAccepted: json['is_accepted'],
       isBlocked: json['is_blocked'],
@@ -36,7 +36,7 @@ class ContactModel {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'created_at': createdAt,
+        'created_at': createdAt.toIso8601String(),
         'is_pending': isPending,
         'is_accepted': isAccepted,
         'is_blocked': isBlocked,

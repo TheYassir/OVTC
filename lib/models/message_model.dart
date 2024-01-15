@@ -1,6 +1,6 @@
 class MessageModel {
-  int id;
-  String createdAt;
+  String id;
+  DateTime createdAt;
   String content;
   String contentType;
   String userId;
@@ -18,7 +18,7 @@ class MessageModel {
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
       id: json['id'],
-      createdAt: json['created_at'],
+      createdAt: DateTime.parse(json['created_at']),
       content: json['content'],
       contentType: json['content_type'],
       userId: json['user_id'],
@@ -28,7 +28,7 @@ class MessageModel {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'created_at': createdAt,
+        'created_at': createdAt.toIso8601String(),
         'content': content,
         'content_type': contentType,
         'user_id': userId,

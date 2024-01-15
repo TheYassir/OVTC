@@ -122,6 +122,10 @@ class _AddContactPageState extends State<AddContactPage> {
                                               _identifierController.text,
                                         ));
                                     _identifierController.clear();
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context)
+                                        .removeCurrentSnackBar();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: const Center(

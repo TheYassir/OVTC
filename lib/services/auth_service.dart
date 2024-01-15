@@ -17,6 +17,12 @@ class AuthService {
         authOptions: const FlutterAuthClientOptions(
           localStorage: EmptyLocalStorage(),
         ),
+        realtimeClientOptions: const RealtimeClientOptions(
+          eventsPerSecond: 1,
+          logLevel: RealtimeLogLevel.debug,
+        ),
+        storageOptions: const StorageClientOptions(),
+        postgrestOptions: const PostgrestClientOptions(),
       );
     } catch (e) {
       print("[AuthService] Initialize: ${e.toString()}");

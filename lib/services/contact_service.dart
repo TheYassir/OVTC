@@ -2,7 +2,7 @@ import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/services/channel_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/validation.dart';
+// import 'package:uuid/validation.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -79,7 +79,7 @@ class ContactService {
 
       ContactModel newContact = ContactModel(
         id: const Uuid().v4(),
-        createdAt: DateTime.now().toIso8601String(),
+        createdAt: DateTime.now(),
         isPending: true,
         isAccepted: false,
         isBlocked: false,
@@ -114,8 +114,28 @@ class ContactService {
             .update({'is_accepted': true, 'is_pending': false}).match(
                 {'id': contactId});
 
-        ChannelService.createChannelAfterContact(
-            userId: userId, otherUserId: otherUserId);
+        try {
+          Map<String, dynamic> fullnameUser = await supabase
+              .from('users')
+              .select('last_name, first_name')
+              .eq('id', userId)
+              .single();
+
+          Map<String, dynamic> fullnameOtherUser = await supabase
+              .from('users')
+              .select('last_name, first_name')
+              .eq('id', otherUserId)
+              .single();
+
+          String title =
+              "${fullnameUser['last_name']} ${fullnameUser['first_name']}, ${fullnameOtherUser['last_name']} ${fullnameOtherUser['first_name']}";
+
+          ChannelService.createChannelAfterContact(
+              userId: userId, otherUserId: otherUserId, title: title);
+        } catch (e) {
+          print("[ContactService]: Fullname");
+          Exception("500: Internal server error");
+        }
       }
     } catch (e) {
       print("[ContactService] responseContact: ${e.toString()}");

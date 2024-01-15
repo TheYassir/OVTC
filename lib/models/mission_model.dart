@@ -2,7 +2,7 @@ class MissionModel {
   String id;
   String addressStart;
   String addressEnd;
-  String dateStart;
+  DateTime dateStart;
   String price;
   String customerId;
   String driverId;
@@ -22,7 +22,7 @@ class MissionModel {
       id: json['id'],
       addressStart: json['address_start'],
       addressEnd: json['address_end'],
-      dateStart: json['date_start'],
+      dateStart: DateTime.parse(json['date_start']),
       price: json['price'],
       customerId: json['customer_id'],
       driverId: json['driver_id'],
@@ -33,7 +33,7 @@ class MissionModel {
         'id': id,
         'address_start': addressStart,
         'address_end': addressEnd,
-        'date_start': dateStart,
+        'date_start': dateStart.toIso8601String(),
         'price': price,
         'customer_id': customerId,
         'driver_id': driverId,
