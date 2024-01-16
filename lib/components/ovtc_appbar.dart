@@ -14,6 +14,7 @@ class OVTCAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: const IconThemeData(color: Colors.white),
       title: const Text(
         "O'VTC",
         style: TextStyle(color: Colors.white),

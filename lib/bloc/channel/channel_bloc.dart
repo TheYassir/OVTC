@@ -24,5 +24,23 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
                 isLoading: false,
               )));
     });
+
+    on<SendMessageEvent>(
+        (SendMessageEvent event, Emitter<ChannelState> emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      await ChannelService.sendMessage(
+        channelId: event.channelId,
+        authId: event.authId,
+        content: event.content,
+      )
+          .then((value) => emit(state.copyWith(
+                isLoading: false,
+              )))
+          .catchError((onError) => emit(state.copyWith(
+                channelErrorMessage: onError.toString(),
+                isLoading: false,
+              )));
+    });
   }
 }

@@ -8,8 +8,14 @@ import 'package:ovtc_app/utils/datetime_format_extension.dart';
 import 'package:ovtc_app/utils/string_casing_extension.dart';
 
 class ChannelCard extends StatelessWidget {
-  const ChannelCard({super.key, required this.channelData});
   final ChannelModel channelData;
+  final String authId;
+
+  const ChannelCard({
+    super.key,
+    required this.channelData,
+    required this.authId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +23,14 @@ class ChannelCard extends StatelessWidget {
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return ListTile(
-            onTap: () =>
-                context.push(OVTCRouter.messages, extra: channelData.id),
+            onTap: () => context.push(OVTCRouter.messages,
+                extra: {"channel": channelData, "authId": authId}),
             title: channelData.title != null
                 ? Text(channelData.title!.toCapitalized())
                 : const Text("New channel"),
-
             subtitle: channelData.lastMessageId != null
                 ? Text(channelData.lastMessage!.content.toCapitalized())
                 : const Text("There are no messages yet"),
-
             trailing: channelData.lastMessageId != null
                 ? Wrap(
                     spacing: 15,
@@ -43,7 +47,6 @@ class ChannelCard extends StatelessWidget {
                     ],
                   )
                 : const Icon(Icons.arrow_forward_ios_rounded),
-
             titleTextStyle: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
@@ -53,10 +56,6 @@ class ChannelCard extends StatelessWidget {
               fontSize: 12.0,
               color: state.isDarkMode ? Colors.white : Colors.black,
             ),
-            // leadingAndTrailingTextStyle: TextStyle(
-            //   fontSize: 14.0,
-            //   color: state.isDarkMode ? Colors.white : Colors.black,
-            // ),
           );
         },
       ),

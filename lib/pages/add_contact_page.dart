@@ -4,6 +4,7 @@ import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class AddContactPage extends StatefulWidget {
   const AddContactPage({super.key});
@@ -34,23 +35,9 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return BlocListener<ContactBloc, ContactState>(
       listener: (context, state) {
-        // _identifierController.text = "e7b4e8b7-ca59-42f7-9dac-7eb9ab5f90aa";
-
         if (state.contactErrorMessage != null) {
-          // Display bug snackbar
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                  child: Text(
-                state.contactErrorMessage.toString(),
-                style: const TextStyle(fontSize: 18),
-              )),
-              backgroundColor: Colors.red[900],
-            ),
-          );
+          context.showErrorSnackBar(
+              message: state.contactErrorMessage.toString());
         }
       },
       child: Scaffold(
@@ -122,20 +109,8 @@ class _AddContactPageState extends State<AddContactPage> {
                                               _identifierController.text,
                                         ));
                                     _identifierController.clear();
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .removeCurrentSnackBar();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: const Center(
-                                            child: Text(
-                                          "Contact Request sent",
-                                          style: TextStyle(fontSize: 18),
-                                        )),
-                                        backgroundColor: Colors.green[900],
-                                      ),
-                                    );
+                                    context.showValidSnackBar(
+                                        message: "Contact Request sent");
                                   }
                                 },
                                 child: const Text('Add'),

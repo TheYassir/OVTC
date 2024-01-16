@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-
+import 'package:ovtc_app/models/channel_model.dart';
 import 'package:ovtc_app/pages/account_page.dart';
 import 'package:ovtc_app/pages/add_contact_page.dart';
 import 'package:ovtc_app/pages/contact_page.dart';
@@ -54,9 +54,13 @@ class OVTCRouter {
       ),
       GoRoute(
         path: messages,
-        builder: (context, state) => MessagesPage(
-          channelId: state.extra as String,
-        ),
+        builder: (context, state) {
+          var datas = state.extra as Map<String, dynamic>;
+          return MessagesPage(
+            channel: datas["channel"] as ChannelModel,
+            authId: datas["authId"] as String,
+          );
+        },
       ),
       GoRoute(
         path: contact,

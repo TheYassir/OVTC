@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,19 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state.errorMessage != null) {
-        // Display bug
-        // ScaffoldMessenger.of(context).clearSnackBars();
-        // ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Center(
-                child: Text(
-              state.errorMessage.toString(),
-              style: const TextStyle(fontSize: 18),
-            )),
-            backgroundColor: Colors.red[900],
-          ),
-        );
+        context.showErrorSnackBar(message: state.errorMessage.toString());
       }
     }, builder: (context, state) {
       // ContactBloc().add(LoadAllContactsEvent(userId: state.auth!.id));

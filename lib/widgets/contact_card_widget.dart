@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/models/role_model.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/utils/string_casing_extension.dart';
 
 class ContactCard extends StatelessWidget {
@@ -16,16 +17,9 @@ class ContactCard extends StatelessWidget {
         builder: (context, state) {
           return ListTile(
             onTap: () => {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Center(
-                      child: Text(
-                    "This feature has not yet been created. It will have to show informations Contact's and block ans deblock.",
-                    style: TextStyle(fontSize: 18),
-                  )),
-                  backgroundColor: Colors.teal,
-                ),
-              )
+              context.showSnackBar(
+                  message:
+                      "This feature has not yet been created. It will have to show informations Contact's and block ans deblock.")
             },
             leading: data.detailOtherUser!.roleId == RoleModel().driverId
                 ? const Icon(

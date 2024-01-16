@@ -8,6 +8,7 @@ import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/account_card_widget.dart';
 
 class AccountPage extends StatelessWidget {
@@ -98,16 +99,9 @@ class AccountPage extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Center(
-                                    child: Text(
+                            context.showSnackBar(
+                              message:
                                   "This feature has not yet been created. It will have to change the account cards by replacing them with fields for modification.",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                )),
-                                backgroundColor: Colors.teal,
-                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(

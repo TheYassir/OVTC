@@ -2,7 +2,7 @@ class MessageModel {
   String id;
   DateTime createdAt;
   String content;
-  String contentType;
+  String? contentType;
   String userId;
   String channelId;
 

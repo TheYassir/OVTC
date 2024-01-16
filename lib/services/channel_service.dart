@@ -105,4 +105,26 @@ class ChannelService {
       rethrow;
     }
   }
+
+  static Future sendMessage(
+      {required String authId,
+      required String content,
+      required String channelId}) async {
+    try {
+      MessageModel newMessage = MessageModel(
+        id: const Uuid().v4(),
+        createdAt: DateTime.now(),
+        content: content,
+        contentType: null,
+        channelId: channelId,
+        userId: authId,
+      );
+
+      await supabase.from('messages').insert(newMessage.toJson());
+      print("[ChannelService] sendMessage send");
+    } catch (e) {
+      print("[ChannelService] sendMessage: ${e.toString()}");
+      rethrow;
+    }
+  }
 }

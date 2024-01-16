@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -48,20 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
           context.go(OVTCRouter.home);
         }
         if (state.errorMessage != null) {
-          // Display bug snackbar
-          // ScaffoldMessenger.of(context).clearSnackBars();
-          // ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                  child: Text(
-                state.errorMessage.toString(),
-                style: const TextStyle(fontSize: 18),
-              )),
-              backgroundColor: Colors.red[900],
-              showCloseIcon: true,
-            ),
-          );
+          context.showErrorSnackBar(message: state.errorMessage.toString());
         }
       },
       child: Scaffold(

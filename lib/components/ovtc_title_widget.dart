@@ -9,6 +9,7 @@ class OVTCTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
+      textAlign: TextAlign.center,
       style: const TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.bold,

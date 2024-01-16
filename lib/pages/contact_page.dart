@@ -6,6 +6,7 @@ import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/contact_card_pending_widget.dart';
 import 'package:ovtc_app/widgets/contact_card_widget.dart';
 import 'package:ovtc_app/components/ovtc_title_widget.dart';
@@ -24,16 +25,8 @@ class ContactPage extends StatelessWidget {
         child: BlocConsumer<ContactBloc, ContactState>(
           listener: (context, state) {
             if (state.contactErrorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Center(
-                      child: Text(
-                    state.contactErrorMessage.toString(),
-                    style: const TextStyle(fontSize: 18),
-                  )),
-                  backgroundColor: Colors.red[900],
-                ),
-              );
+              context.showErrorSnackBar(
+                  message: state.contactErrorMessage.toString());
             }
           },
           builder: (context, state) {
@@ -78,7 +71,6 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 2,
                                     child: ListView.builder(
-                                        reverse: true,
                                         itemCount: state.contacts!.length,
                                         itemBuilder: (context, index) {
                                           return ContactCard(
@@ -108,7 +100,6 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 3,
                                     child: ListView.builder(
-                                        reverse: true,
                                         itemCount:
                                             state.pendingContacts!.length,
                                         itemBuilder: (context, index) {
@@ -141,7 +132,6 @@ class ContactPage extends StatelessWidget {
                                 : Expanded(
                                     flex: 1,
                                     child: ListView.builder(
-                                        reverse: true,
                                         itemCount:
                                             state.blockedContacts!.length,
                                         itemBuilder: (context, index) {

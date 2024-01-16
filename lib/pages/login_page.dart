@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -41,20 +42,7 @@ class _LoginPageState extends State<LoginPage> {
           context.go(OVTCRouter.home);
         }
         if (state.errorMessage != null) {
-          // Display bug snackbar
-          // ScaffoldMessenger.of(context).clearSnackBars();
-          // ScaffoldMessenger.of(context).removeCurrentSnackBar();
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                  child: Text(
-                state.errorMessage.toString(),
-                style: const TextStyle(fontSize: 18),
-              )),
-              backgroundColor: Colors.red[900],
-            ),
-          );
+          context.showErrorSnackBar(message: state.errorMessage.toString());
         }
       },
       child: Scaffold(

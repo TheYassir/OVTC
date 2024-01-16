@@ -48,7 +48,6 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
                 contactErrorMessage: onError.toString(),
                 isLoading: false,
               )));
-      ;
     });
 
     on<ResponseContactEvent>(

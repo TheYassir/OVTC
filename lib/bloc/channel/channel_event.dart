@@ -11,3 +11,15 @@ class LoadAllChannelsEvent extends ChannelEvent {
     required this.authId,
   });
 }
+
+class SendMessageEvent extends ChannelEvent {
+  final String content;
+  final String authId;
+  final String channelId;
+
+  const SendMessageEvent({
+    required this.content,
+    required this.authId,
+    required this.channelId,
+  });
+}

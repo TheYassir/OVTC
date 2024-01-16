@@ -65,7 +65,8 @@ class ChannelsPage extends StatelessWidget {
                                     itemCount: state.channels!.length,
                                     itemBuilder: (context, index) {
                                       return ChannelCard(
-                                          channelData: state.channels![index]);
+                                          channelData: state.channels![index],
+                                          authId: authId);
                                     }),
                               ),
                       ],
