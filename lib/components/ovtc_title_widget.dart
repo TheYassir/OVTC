@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ovtc_app/utils/string_casing_extension.dart';
 
 class OVTCTitle extends StatelessWidget {
   const OVTCTitle({super.key, required this.title});
@@ -8,7 +9,7 @@ class OVTCTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title,
+      title.toTitleCase(),
       textAlign: TextAlign.center,
       style: const TextStyle(
           fontSize: 28,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/channel/channel_bloc.dart';
-import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class MessageBar extends StatefulWidget {
   final String authId;

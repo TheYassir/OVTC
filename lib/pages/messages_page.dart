@@ -8,7 +8,6 @@ import 'package:ovtc_app/components/ovtc_title_widget.dart';
 import 'package:ovtc_app/models/channel_model.dart';
 import 'package:ovtc_app/models/detail_other_user.dart';
 import 'package:ovtc_app/models/message_model.dart';
-import 'package:ovtc_app/services/message_service.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/message_bar_widget.dart';
 import 'package:ovtc_app/widgets/message_chat_bubble_widget.dart';
@@ -19,12 +18,13 @@ final supabase = Supabase.instance.client;
 class MessagesPage extends StatefulWidget {
   final ChannelModel channel;
   final String authId;
-  // final List<DetailOtherUserModel> users;
+  final List<DetailOtherUserModel> users;
 
   const MessagesPage({
     super.key,
     required this.channel,
     required this.authId,
+    required this.users,
   });
 
   @override
@@ -33,21 +33,9 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagesPageState extends State<MessagesPage> {
   final _stream = supabase.from('messages').stream(primaryKey: ['id']);
-  // final List<DetailOtherUserModel> _users = await MessageService.findAllDetailUsers( channelId: widget.channel.id, authId: widget.authId) ;
-  late final List<DetailOtherUserModel> _users;
-
-  Future<void> findUsers() async {
-    final res = await MessageService.findAllDetailUsers(
-        channelId: widget.channel.id, authId: widget.authId);
-    setState(() {
-      _users = res;
-    });
-  }
 
   @override
   void initState() {
-    findUsers();
-
     super.initState();
   }
 
@@ -88,7 +76,7 @@ class _MessagesPageState extends State<MessagesPage> {
                                       child: Text(
                                           'Start your conversation now :)'),
                                     )
-                                  : _users.isNotEmpty
+                                  : widget.users.isNotEmpty
                                       ? ListView.builder(
                                           // reverse: true,
                                           dragStartBehavior:
@@ -99,9 +87,9 @@ class _MessagesPageState extends State<MessagesPage> {
                                                 MessageModel.fromJson(
                                                     messages[index]);
                                             final DetailOtherUserModel user =
-                                                _users.length == 1
-                                                    ? _users.first
-                                                    : _users.firstWhere(
+                                                widget.users.length == 1
+                                                    ? widget.users.first
+                                                    : widget.users.firstWhere(
                                                         (element) =>
                                                             element.id ==
                                                             message.userId);

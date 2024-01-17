@@ -1,5 +1,7 @@
 extension DatetimeFormat on DateTime {
-  String toDateFormat() => toString().substring(0, 10).replaceAll("-", "/");
+  String toDateFormat() =>
+      toLocal().toString().substring(0, 10).replaceAll("-", "/");
 
-  String toHoursFormat() => toString().substring(10, 16).replaceAll(":", "h");
+  String toHoursFormat() =>
+      toLocal().toString().substring(10, 16).replaceAll(":", "h");
 }
