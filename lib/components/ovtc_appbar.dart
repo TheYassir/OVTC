@@ -15,9 +15,15 @@ class OVTCAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
-      title: const Text(
-        "O'VTC",
-        style: TextStyle(color: Colors.white),
+      title: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.local_taxi_rounded),
+          Text(
+            " O'VTC",
+            style: TextStyle(color: Colors.white),
+          ),
+        ],
       ),
       elevation: 0,
       backgroundColor: OVTCTheme.primaryColor,
@@ -53,7 +59,7 @@ class OVTCAppBar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 8.0),
-                            child: Text("Yassir"),
+                            child: Text("Account"),
                           ),
                           Icon(Icons.account_circle),
                         ],

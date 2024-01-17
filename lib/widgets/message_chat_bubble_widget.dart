@@ -19,7 +19,7 @@ class MessageChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: message.userId == authId
-            ? const EdgeInsets.only(right: 18.0, left: 50, top: 5, bottom: 5)
+            ? const EdgeInsets.only(right: 20.0, left: 50, top: 5, bottom: 5)
             : const EdgeInsets.only(right: 50.0, left: 18.0, top: 5, bottom: 5),
         child: Row(
           children: [

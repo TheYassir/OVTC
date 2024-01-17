@@ -61,15 +61,22 @@ class AccountPage extends StatelessWidget {
                         if (state.driver != null) {
                           data.addAll(state.driver!.toJson());
                         }
-                        data.removeWhere((key, value) => key.contains("id"));
+                        // Remove role_id from object
+                        data.removeWhere((key, value) => key.contains("_id"));
 
                         return Expanded(
-                          child: ListView.builder(
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return AccountCard(
-                                    data: data.entries.elementAt(index));
-                              }),
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            thickness: 5,
+                            radius: const Radius.circular(20),
+                            scrollbarOrientation: ScrollbarOrientation.right,
+                            child: ListView.builder(
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return AccountCard(
+                                      data: data.entries.elementAt(index));
+                                }),
+                          ),
                         );
                       }
                     }),

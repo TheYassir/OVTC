@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/models/channel_model.dart';
-import 'package:ovtc_app/models/detail_other_user.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/services/message_service.dart';
 import 'package:ovtc_app/utils/datetime_format_extension.dart';

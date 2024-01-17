@@ -77,29 +77,35 @@ class _MessagesPageState extends State<MessagesPage> {
                                           'Start your conversation now :)'),
                                     )
                                   : widget.users.isNotEmpty
-                                      ? ListView.builder(
-                                          // reverse: true,
-                                          dragStartBehavior:
-                                              DragStartBehavior.down,
-                                          itemCount: messages.length,
-                                          itemBuilder: (context, index) {
-                                            final MessageModel message =
-                                                MessageModel.fromJson(
-                                                    messages[index]);
-                                            final DetailOtherUserModel user =
-                                                widget.users.length == 1
-                                                    ? widget.users.first
-                                                    : widget.users.firstWhere(
-                                                        (element) =>
-                                                            element.id ==
-                                                            message.userId);
+                                      ? Scrollbar(
+                                          thumbVisibility: true,
+                                          thickness: 5,
+                                          radius: const Radius.circular(20),
+                                          scrollbarOrientation:
+                                              ScrollbarOrientation.right,
+                                          child: ListView.builder(
+                                            dragStartBehavior:
+                                                DragStartBehavior.down,
+                                            itemCount: messages.length,
+                                            itemBuilder: (context, index) {
+                                              final MessageModel message =
+                                                  MessageModel.fromJson(
+                                                      messages[index]);
+                                              final DetailOtherUserModel user =
+                                                  widget.users.length == 1
+                                                      ? widget.users.first
+                                                      : widget.users.firstWhere(
+                                                          (element) =>
+                                                              element.id ==
+                                                              message.userId);
 
-                                            return MessageChatBubble(
-                                              message: message,
-                                              user: user,
-                                              authId: widget.authId,
-                                            );
-                                          },
+                                              return MessageChatBubble(
+                                                message: message,
+                                                user: user,
+                                                authId: widget.authId,
+                                              );
+                                            },
+                                          ),
                                         )
                                       : const CircularProgressIndicator(),
                             ),
