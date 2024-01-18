@@ -43,7 +43,6 @@ class _MessageBarState extends State<MessageBar> {
                   flex: 5,
                   child: TextFormField(
                       controller: _messageController,
-                      autofocus: true,
                       autocorrect: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

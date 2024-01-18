@@ -11,8 +11,8 @@ class AuthService {
   static initialize() async {
     try {
       await Supabase.initialize(
-        url: dotenv.env['YOUR_SUPABASE_URL']!,
-        anonKey: dotenv.env['YOUR_SUPABASE_ANON_KEY']!,
+        url: dotenv.env['SUPABASE_URL']!,
+        anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
         debug: true,
         authOptions: const FlutterAuthClientOptions(
           localStorage: EmptyLocalStorage(),

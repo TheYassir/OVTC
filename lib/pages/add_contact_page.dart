@@ -68,7 +68,6 @@ class _AddContactPageState extends State<AddContactPage> {
                     const SizedBox(height: 32),
                     TextFormField(
                         controller: _identifierController,
-                        autofocus: true,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.text,

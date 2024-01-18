@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     TextFormField(
                         controller: _emailController,
-                        autofocus: true,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,

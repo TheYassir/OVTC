@@ -116,7 +116,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 10),
                     TextFormField(
                         controller: _emailController,
-                        autofocus: true,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,

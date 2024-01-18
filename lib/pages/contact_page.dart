@@ -82,7 +82,15 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  OVTCTitle(title: "Contact request pending"),
+                                  // OVTCTitle(title: "Contact request pending"),
+                                  Text(
+                                    "Contact request pending",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline),
+                                  )
                                 ],
                               ),
                             ),
