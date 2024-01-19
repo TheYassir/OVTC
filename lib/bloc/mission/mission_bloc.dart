@@ -41,6 +41,8 @@ class MissionBloc extends Bloc<MissionEvent, MissionState> {
       await MissionService.createMission(
         customerId: event.customerId,
         driverId: event.driverId,
+        receiverId: event.receiverId,
+        senderId: event.senderId,
         addressStart: event.addressStart,
         addressEnd: event.addressEnd,
         dateStart: event.dateStart,

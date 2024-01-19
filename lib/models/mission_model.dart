@@ -5,9 +5,11 @@ class MissionModel {
   String addressStart;
   String addressEnd;
   DateTime dateStart;
-  String price;
+  int price;
   String customerId;
   String driverId;
+  String receiverId;
+  String senderId;
   bool isPending;
   bool isAccepted;
   bool isRefused;
@@ -21,6 +23,8 @@ class MissionModel {
     required this.price,
     required this.customerId,
     required this.driverId,
+    required this.receiverId,
+    required this.senderId,
     required this.isPending,
     required this.isAccepted,
     required this.isRefused,
@@ -36,6 +40,8 @@ class MissionModel {
       price: json['price'],
       customerId: json['customer_id'],
       driverId: json['driver_id'],
+      senderId: json['sender_id'],
+      receiverId: json['receiver_id'],
       isAccepted: json['is_accepted'],
       isPending: json['is_pending'],
       isRefused: json['is_refused'],
@@ -51,9 +57,11 @@ class MissionModel {
         'price': price,
         'customer_id': customerId,
         'driver_id': driverId,
+        'sender_id': senderId,
+        'receiver_id': receiverId,
         'is_pending': isPending,
         'is_accepted': isAccepted,
-        'is_blocked': isRefused,
+        'is_refused': isRefused,
       };
 
   @override

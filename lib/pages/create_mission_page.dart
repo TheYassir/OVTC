@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/bloc/mission/mission_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
+import 'package:ovtc_app/models/contact_model.dart';
+import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 
 class CreateMissionPage extends StatefulWidget {
   final String authId;
-  const CreateMissionPage({super.key, required this.authId});
+  final String roleId;
+  final List<ContactModel>? contacts;
+
+  const CreateMissionPage(
+      {super.key,
+      required this.authId,
+      required this.contacts,
+      required this.roleId});
 
   @override
   State<CreateMissionPage> createState() => _CreateMissionPageState();
@@ -70,8 +80,8 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: BlocBuilder<MissionBloc, MissionState>(
-            builder: (context, state) {
-              return state.contacts?.firstOrNull == null
+            builder: (context, missionState) {
+              return widget.contacts?.firstOrNull == null
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -79,8 +89,13 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                           const Text(
                               "You don't have a contact to send mission to."),
                           ElevatedButton(
-                            onPressed: () => context.go(OVTCRouter.contact,
-                                extra: widget.authId),
+                            onPressed: () => {
+                              context
+                                  .read<AppBloc>()
+                                  .add(NavbarIndexEvent(navbarIndex: 1)),
+                              context.go(OVTCRouter.contact,
+                                  extra: widget.authId),
+                            },
                             child: const Text("Go to the contact page !"),
                           ),
                         ],
@@ -105,6 +120,17 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                             ),
                           ),
                           const SizedBox(height: 32),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () => _selectDate(context),
+                                child: const Text('Select date'),
+                              ),
+                              Text("${_dateStart.toLocal()}".split(' ')[0]),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
                           DropdownButtonFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -119,7 +145,7 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                 labelText:
                                     'Choose your driver or your customer*',
                               ),
-                              items: state.contacts!.map((contact) {
+                              items: widget.contacts!.map((contact) {
                                 return DropdownMenuItem(
                                   value: contact.detailOtherUser!.id,
                                   child: Text(
@@ -131,16 +157,7 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                   _otherUserId = val!;
                                 });
                               }),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => _selectDate(context),
-                                child: const Text('Select date'),
-                              ),
-                              Text("${_dateStart.toLocal()}".split(' ')[0]),
-                            ],
-                          ),
+                          const SizedBox(height: 6),
                           TextFormField(
                               controller: _addressStartController,
                               autocorrect: false,
@@ -169,6 +186,7 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                   ),
                                 ),
                               )),
+                          const SizedBox(height: 6),
                           TextFormField(
                               controller: _addressEndController,
                               autocorrect: false,
@@ -197,6 +215,7 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                   ),
                                 ),
                               )),
+                          const SizedBox(height: 6),
                           TextFormField(
                               controller: _priceController,
                               autocorrect: false,
@@ -226,7 +245,7 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                 ),
                               )),
                           const SizedBox(height: 10),
-                          state.isLoading
+                          missionState.isLoading
                               ? const CircularProgressIndicator()
                               : BlocBuilder<AuthBloc, AuthState>(
                                   builder: (context, authState) {
@@ -236,26 +255,53 @@ class _CreateMissionPageState extends State<CreateMissionPage> {
                                       ),
                                       onPressed: () {
                                         if (_formkey.currentState!.validate()) {
-                                          context
-                                              .read<MissionBloc>()
-                                              .add(CreateMissionEvent(
-                                                addressStart:
-                                                    _addressStartController
-                                                        .text,
-                                                addressEnd:
-                                                    _addressEndController.text,
-                                                dateStart: _dateStart,
-                                                price: _priceController.text,
-                                                customerId: authState.auth!.id,
-                                                driverId: _otherUserId,
-                                              ));
-                                          // _addressStartController.clear();
-                                          // _addressEndController.clear();
-                                          // _priceController.clear();
-                                          // _dateStart.
+                                          if (widget.roleId ==
+                                              RoleModel().driverId) {
+                                            context
+                                                .read<MissionBloc>()
+                                                .add(CreateMissionEvent(
+                                                  addressStart:
+                                                      _addressStartController
+                                                          .text,
+                                                  addressEnd:
+                                                      _addressEndController
+                                                          .text,
+                                                  dateStart: _dateStart,
+                                                  price: int.parse(
+                                                      _priceController.text),
+                                                  customerId: _otherUserId,
+                                                  driverId: authState.auth!.id,
+                                                  receiverId: _otherUserId,
+                                                  senderId: authState.auth!.id,
+                                                ));
+                                          } else {
+                                            context
+                                                .read<MissionBloc>()
+                                                .add(CreateMissionEvent(
+                                                  addressStart:
+                                                      _addressStartController
+                                                          .text,
+                                                  addressEnd:
+                                                      _addressEndController
+                                                          .text,
+                                                  dateStart: _dateStart,
+                                                  price: int.parse(
+                                                      _priceController.text),
+                                                  customerId:
+                                                      authState.auth!.id,
+                                                  driverId: _otherUserId,
+                                                  senderId: authState.auth!.id,
+                                                  receiverId: _otherUserId,
+                                                ));
+                                          }
+
                                           context.showValidSnackBar(
                                               message: "Mission Request sent");
-                                          context.go(OVTCRouter.home);
+
+                                          context.read<AppBloc>().add(
+                                              NavbarIndexEvent(navbarIndex: 0));
+                                          context.go(OVTCRouter.home,
+                                              extra: widget.authId);
                                         }
                                       },
                                       child: const Text('Send'),

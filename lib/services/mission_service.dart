@@ -17,19 +17,17 @@ class MissionService {
           .eq('id', authId)
           .single();
 
-      // print("Role de l'utilisateur: ${responseRole['role_id']}");
-
       List<Map<String, dynamic>> responseAllMissions;
 
       if (responseRole["role_id"] == RoleModel().driverId) {
         responseAllMissions = await supabase
             .from('missions')
-            .select('''*,detailOtherUser:customer_id(id, first_name, last_name, email)''').eq(
+            .select('''*,detailOtherUser:customer_id(id, first_name, last_name, email, role_id)''').eq(
                 'driver_id', authId);
       } else {
         responseAllMissions = await supabase
             .from('missions')
-            .select('''*,detailOtherUser:driver_id(id, first_name, last_name, email)''').eq(
+            .select('''*,detailOtherUser:driver_id(id, first_name, last_name, email, role_id)''').eq(
                 'customer_id', authId);
       }
 
@@ -38,22 +36,21 @@ class MissionService {
       Map<String, List<ContactModel>> allContacts =
           await ContactService.getAllContacts(userId: authId);
 
-      // print("Error on receiverResponse : ${receiverResponse.toString()}");
+      final valueIfNotMission = {
+        "role_id": responseRole["role_id"],
+        "acceptedMissions": null,
+        "pendingMissions": null,
+        "refusedMissions": null,
+        "contacts": allContacts["contacts"],
+      };
+      print("Sent data : ${valueIfNotMission.toString()}");
       if (responseAllMissions.isEmpty) {
-        return {
-          "role_id": responseRole["role_id"],
-          "acceptedMissions": null,
-          "pendingMissions": null,
-          "refusedMissions": null,
-          "contacts": allContacts["contacts"],
-        };
+        return valueIfNotMission;
       }
 
       final List<MissionModel> allMissions = responseAllMissions
           .map((mission) => MissionModel.fromJson(mission))
           .toList();
-
-      // print("Error on allMissions to list : ${allMissions.toString()}");
 
       final List<MissionModel> acceptedMissions =
           (allMissions.where((element) => element.isAccepted == true)).toList();
@@ -69,7 +66,7 @@ class MissionService {
         "refusedMissions": refusedMissions,
         "contacts": allContacts["contacts"],
       };
-      // print("Error on value : ${value.toString()}");
+
       return value;
     } catch (e) {
       print("[MissionService] getAllMissions: ${e.toString()}");
@@ -80,10 +77,12 @@ class MissionService {
   static Future createMission({
     required String customerId,
     required String driverId,
+    required String senderId,
+    required String receiverId,
     required String addressStart,
     required String addressEnd,
     required DateTime dateStart,
-    required String price,
+    required int price,
   }) async {
     try {
       MissionModel newMission = MissionModel(
@@ -97,9 +96,15 @@ class MissionService {
         isRefused: false,
         customerId: customerId,
         driverId: driverId,
+        senderId: senderId,
+        receiverId: receiverId,
       );
+      try {
+        await supabase.from('missions').insert(newMission.toJson());
+      } catch (e) {
+        throw Exception("500: Internal server error");
+      }
 
-      await supabase.from('missions').insert(newMission.toJson());
       print("[MissionService] Mission created");
     } catch (e) {
       print("[MissionService] createMission: ${e.toString()}");
@@ -119,13 +124,12 @@ class MissionService {
               .from('missions')
               .update({'is_accepted': true, 'is_pending': false}).match(
                   {'id': missionId});
-
-          if (isRefused == true) {
-            await supabase
-                .from('missions')
-                .update({'is_refused': true, 'is_pending': false}).match(
-                    {'id': missionId});
-          }
+        }
+        if (isRefused == true) {
+          await supabase
+              .from('missions')
+              .update({'is_refused': true, 'is_pending': false}).match(
+                  {'id': missionId});
         }
       } catch (e) {
         throw Exception("500: Internal server error ${e.toString()}");

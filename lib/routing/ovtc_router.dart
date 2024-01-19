@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/models/channel_model.dart';
+import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/models/detail_other_user.dart';
 import 'package:ovtc_app/pages/account_page.dart';
 import 'package:ovtc_app/pages/add_contact_page.dart';
@@ -74,10 +75,15 @@ class OVTCRouter {
         builder: (context, state) => const AddContactPage(),
       ),
       GoRoute(
-        path: createMission,
-        builder: (context, state) =>
-            CreateMissionPage(authId: state.extra as String),
-      ),
+          path: createMission,
+          builder: (context, state) {
+            var datas = state.extra as Map<String, dynamic>;
+            return CreateMissionPage(
+              authId: datas["authId"] as String,
+              roleId: datas["roleId"] as String,
+              contacts: datas["contacts"] as List<ContactModel>,
+            );
+          }),
     ],
   );
 }

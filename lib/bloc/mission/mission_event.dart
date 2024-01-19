@@ -15,10 +15,12 @@ class LoadAllMissionsEvent extends MissionEvent {
 class CreateMissionEvent extends MissionEvent {
   final String customerId;
   final String driverId;
+  final String senderId;
+  final String receiverId;
   final String addressStart;
   final String addressEnd;
   final DateTime dateStart;
-  final String price;
+  final int price;
 
   const CreateMissionEvent({
     required this.addressStart,
@@ -27,6 +29,8 @@ class CreateMissionEvent extends MissionEvent {
     required this.price,
     required this.customerId,
     required this.driverId,
+    required this.senderId,
+    required this.receiverId,
   });
 }
 

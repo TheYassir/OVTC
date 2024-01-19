@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
-import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
-import 'package:ovtc_app/models/contact_model.dart';
+import 'package:ovtc_app/bloc/mission/mission_bloc.dart';
+import 'package:ovtc_app/models/mission_model.dart';
 import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/datetime_format_extension.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/utils/string_casing_extension.dart';
 
-class ContactPendingCard extends StatelessWidget {
-  const ContactPendingCard(
-      {super.key, required this.data, required this.authId});
-
-  final ContactModel data;
+class MissionPendingCard extends StatelessWidget {
+  final MissionModel mission;
   final String authId;
+  const MissionPendingCard(
+      {super.key, required this.mission, required this.authId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ContactPendingCard extends StatelessWidget {
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return ListTile(
-            onTap: data.senderId == authId
+            onTap: mission.senderId == authId
                 ? () {}
                 : () => {
                       showModalBottomSheet<void>(
@@ -45,20 +45,14 @@ class ContactPendingCard extends StatelessWidget {
                                       ElevatedButton.icon(
                                         onPressed: () {
                                           context
-                                              .read<ContactBloc>()
-                                              .add(ResponseContactEvent(
-                                                contactId: data.id,
-                                                userId: authId,
-                                                otherUserId:
-                                                    data.detailOtherUser!.id,
-                                                accepted: true,
-                                                blocked: false,
+                                              .read<MissionBloc>()
+                                              .add(ResponseMissionEvent(
+                                                missionId: mission.id,
+                                                isAccepted: true,
+                                                isRefused: false,
                                               ));
 
-                                          context.read<AppBloc>().add(
-                                              NavbarIndexEvent(navbarIndex: 0));
-                                          context.go(OVTCRouter.home,
-                                              extra: authId);
+                                          context.pop();
                                         },
                                         icon: const Icon(
                                           Icons.check_circle_outline_rounded,
@@ -70,20 +64,14 @@ class ContactPendingCard extends StatelessWidget {
                                       ElevatedButton.icon(
                                         onPressed: () {
                                           context
-                                              .read<ContactBloc>()
-                                              .add(ResponseContactEvent(
-                                                contactId: data.id,
-                                                userId: authId,
-                                                otherUserId:
-                                                    data.detailOtherUser!.id,
-                                                accepted: false,
-                                                blocked: false,
+                                              .read<MissionBloc>()
+                                              .add(ResponseMissionEvent(
+                                                missionId: mission.id,
+                                                isAccepted: false,
+                                                isRefused: true,
                                               ));
 
-                                          context.read<AppBloc>().add(
-                                              NavbarIndexEvent(navbarIndex: 0));
-                                          context.go(OVTCRouter.home,
-                                              extra: authId);
+                                          context.pop();
                                         },
                                         icon: Icon(
                                           Icons.highlight_off_rounded,
@@ -91,30 +79,6 @@ class ContactPendingCard extends StatelessWidget {
                                           size: 24,
                                         ),
                                         label: const Text('Refused'),
-                                      ),
-                                      ElevatedButton.icon(
-                                        onPressed: () {
-                                          context
-                                              .read<ContactBloc>()
-                                              .add(ResponseContactEvent(
-                                                contactId: data.id,
-                                                userId: authId,
-                                                otherUserId:
-                                                    data.detailOtherUser!.id,
-                                                accepted: false,
-                                                blocked: true,
-                                              ));
-
-                                          context.read<AppBloc>().add(
-                                              NavbarIndexEvent(navbarIndex: 0));
-                                          context.go(OVTCRouter.home);
-                                        },
-                                        icon: const Icon(
-                                          Icons.block_rounded,
-                                          color: Colors.red,
-                                          size: 24,
-                                        ),
-                                        label: const Text('Blocked'),
                                       ),
                                     ],
                                   ),
@@ -125,7 +89,7 @@ class ContactPendingCard extends StatelessWidget {
                         },
                       )
                     },
-            leading: data.detailOtherUser!.roleId == RoleModel().driverId
+            leading: mission.detailOtherUser!.roleId == RoleModel().driverId
                 ? const Icon(
                     Icons.local_taxi_rounded,
                   )
@@ -133,29 +97,34 @@ class ContactPendingCard extends StatelessWidget {
                     Icons.person,
                   ),
             title: Text(
-                "${data.detailOtherUser!.firstName.toCapitalized()} ${data.detailOtherUser!.lastName.toCapitalized()}"),
+              "${mission.detailOtherUser!.firstName.toCapitalized()} ${mission.detailOtherUser!.lastName.toCapitalized()}",
+              textAlign: TextAlign.center,
+            ),
             subtitle: Column(
               children: [
                 const Divider(),
                 // const SizedBox(height: 8),
                 Text(
-                  "Created on ${data.createdAt.toDateFormat()}",
+                  "Date Start on ${mission.dateStart.toDateFormat()}",
+                  textAlign: TextAlign.center,
                 ),
-                data.senderId == authId
+                mission.senderId == authId
                     ? const Text(
                         "Waiting for a reply from the contact",
+                        textAlign: TextAlign.center,
                       )
                     : const Text(
                         "Waiting for your response.",
+                        textAlign: TextAlign.center,
                       ),
-                if (data.senderId != authId)
+                if (mission.senderId != authId)
                   Text(
                     "Click here to reply.",
                     style: TextStyle(color: Colors.yellow[900]),
                   )
               ],
             ),
-            trailing: data.senderId == authId
+            trailing: mission.senderId == authId
                 ? const Icon(Icons.watch_later_outlined)
                 : Icon(
                     Icons.warning_amber_rounded,

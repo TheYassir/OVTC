@@ -15,7 +15,8 @@ class OVTCBottomBar extends StatelessWidget {
         String? currentPath = GoRouterState.of(context).path;
         Color selectedColor = (currentPath == OVTCRouter.account ||
                 currentPath == OVTCRouter.messages ||
-                currentPath == OVTCRouter.addContact
+                currentPath == OVTCRouter.addContact ||
+                currentPath == OVTCRouter.createMission
             ? Colors.white
             : OVTCTheme.secondaryColor);
 

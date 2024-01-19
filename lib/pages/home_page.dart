@@ -8,6 +8,7 @@ import 'package:ovtc_app/components/ovtc_title_widget.dart';
 import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
+import 'package:ovtc_app/widgets/mission_card_pending_widget.dart';
 import 'package:ovtc_app/widgets/mission_card_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,6 +18,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+      lazy: true,
       create: (context) =>
           MissionBloc()..add(LoadAllMissionsEvent(authId: authId)),
       child: BlocConsumer<MissionBloc, MissionState>(
@@ -32,8 +34,11 @@ class HomePage extends StatelessWidget {
               bottomNavigationBar: const OVTCBottomBar(),
               floatingActionButton: FloatingActionButton(
                 backgroundColor: OVTCTheme.primaryColor,
-                onPressed: () =>
-                    context.push(OVTCRouter.createMission, extra: authId),
+                onPressed: () => context.push(OVTCRouter.createMission, extra: {
+                  "authId": authId,
+                  "roleId": state.roleId,
+                  "contacts": state.contacts,
+                }),
                 child: const Icon(
                   Icons.add_location_rounded,
                   color: OVTCTheme.secondaryColor,
@@ -69,13 +74,13 @@ class HomePage extends StatelessWidget {
                               : Expanded(
                                   flex: 2,
                                   child: ListView.builder(
-                                      itemCount: state.contacts!.length,
-                                      itemBuilder: (context, index) {
-                                        return MissionCard(
-                                          mission:
-                                              state.acceptedMissions![index],
-                                        );
-                                      }),
+                                      shrinkWrap: true,
+                                      itemCount: state.acceptedMissions!.length,
+                                      itemBuilder: (context, index) =>
+                                          MissionCard(
+                                            mission: state.acceptedMissions!
+                                                .elementAt(index),
+                                          )),
                                 ),
                           const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -101,12 +106,12 @@ class HomePage extends StatelessWidget {
                                   flex: 3,
                                   child: ListView.builder(
                                       itemCount: state.pendingMissions!.length,
-                                      itemBuilder: (context, index) {
-                                        return MissionCard(
-                                          mission:
-                                              state.pendingMissions![index],
-                                        );
-                                      }),
+                                      itemBuilder: (context, index) =>
+                                          MissionPendingCard(
+                                            mission:
+                                                state.pendingMissions![index],
+                                            authId: authId,
+                                          )),
                                 ),
                           const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -132,11 +137,10 @@ class HomePage extends StatelessWidget {
                                   flex: 1,
                                   child: ListView.builder(
                                       itemCount: state.refusedMissions!.length,
-                                      itemBuilder: (context, index) {
-                                        return MissionCard(
-                                            mission:
-                                                state.refusedMissions![index]);
-                                      }),
+                                      itemBuilder: (context, index) =>
+                                          MissionCard(
+                                              mission: state
+                                                  .refusedMissions![index])),
                                 ),
                         ],
                       ),
