@@ -5,9 +5,7 @@ import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/mission/mission_bloc.dart';
 import 'package:ovtc_app/models/mission_model.dart';
 import 'package:ovtc_app/models/role_model.dart';
-import 'package:ovtc_app/routing/ovtc_router.dart';
 import 'package:ovtc_app/utils/datetime_format_extension.dart';
-import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/utils/string_casing_extension.dart';
 
 class MissionPendingCard extends StatelessWidget {
