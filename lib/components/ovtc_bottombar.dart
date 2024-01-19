@@ -42,10 +42,10 @@ class OVTCBottomBar extends StatelessWidget {
                   icon: Icon(Icons.message),
                   label: 'Channels',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications),
-                  label: 'Notifications',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.notifications),
+                //   label: 'Notifications',
+                // ),
               ],
               onTap: (index) {
                 context
@@ -54,7 +54,7 @@ class OVTCBottomBar extends StatelessWidget {
 
                 switch (index) {
                   case 0:
-                    context.go(OVTCRouter.home);
+                    context.go(OVTCRouter.home, extra: authState.auth!.id);
                     break;
                   case 1:
                     context.go(OVTCRouter.contact, extra: authState.auth!.id);
@@ -62,9 +62,9 @@ class OVTCBottomBar extends StatelessWidget {
                   case 2:
                     context.go(OVTCRouter.channels, extra: authState.auth!.id);
                     break;
-                  case 3:
-                    context.go(OVTCRouter.notifications);
-                    break;
+                  // case 3:
+                  //   context.go(OVTCRouter.notifications);
+                  //   break;
                 }
               },
             );

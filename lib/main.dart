@@ -4,6 +4,7 @@ import 'package:ovtc_app/bloc/app/app_bloc.dart';
 import 'package:ovtc_app/bloc/auth/auth_bloc.dart';
 import 'package:ovtc_app/bloc/channel/channel_bloc.dart';
 import 'package:ovtc_app/bloc/contact/contact_bloc.dart';
+import 'package:ovtc_app/bloc/mission/mission_bloc.dart';
 import 'package:ovtc_app/utils/ovtc_theme.dart';
 import 'routing/ovtc_router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<AppBloc>(
           create: (BuildContext context) => AppBloc(),
+        ),
+        BlocProvider<MissionBloc>(
+          create: (BuildContext context) => MissionBloc(),
         ),
         BlocProvider<ContactBloc>(
           create: (BuildContext context) => ContactBloc(),

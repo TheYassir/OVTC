@@ -56,7 +56,8 @@ class ContactPendingCard extends StatelessWidget {
 
                                           context.read<AppBloc>().add(
                                               NavbarIndexEvent(navbarIndex: 0));
-                                          context.go(OVTCRouter.home);
+                                          context.go(OVTCRouter.home,
+                                              extra: authId);
                                         },
                                         icon: const Icon(
                                           Icons.check_circle_outline_rounded,

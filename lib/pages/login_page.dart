@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         _emailController.text = "miaaaou78@gmail.com";
         _passwordController.text = "rissay78";
         if (state.auth != null) {
-          context.go(OVTCRouter.home);
+          context.go(OVTCRouter.home, extra: state.auth!.id);
         }
         if (state.errorMessage != null) {
           context.showErrorSnackBar(message: state.errorMessage.toString());

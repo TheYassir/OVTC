@@ -58,7 +58,7 @@ class _AddContactPageState extends State<AddContactPage> {
                       size: 60,
                     ),
                     Text(
-                      "Add contact",
+                      "Add Contact",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w500,

@@ -1,3 +1,5 @@
+import 'package:ovtc_app/models/detail_other_user.dart';
+
 class MissionModel {
   String id;
   String addressStart;
@@ -6,6 +8,10 @@ class MissionModel {
   String price;
   String customerId;
   String driverId;
+  bool isPending;
+  bool isAccepted;
+  bool isRefused;
+  DetailOtherUserModel? detailOtherUser;
 
   MissionModel({
     required this.id,
@@ -15,6 +21,10 @@ class MissionModel {
     required this.price,
     required this.customerId,
     required this.driverId,
+    required this.isPending,
+    required this.isAccepted,
+    required this.isRefused,
+    this.detailOtherUser,
   });
 
   factory MissionModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +36,10 @@ class MissionModel {
       price: json['price'],
       customerId: json['customer_id'],
       driverId: json['driver_id'],
+      isAccepted: json['is_accepted'],
+      isPending: json['is_pending'],
+      isRefused: json['is_refused'],
+      detailOtherUser: DetailOtherUserModel.fromJson(json['detailOtherUser']),
     );
   }
 
@@ -37,10 +51,13 @@ class MissionModel {
         'price': price,
         'customer_id': customerId,
         'driver_id': driverId,
+        'is_pending': isPending,
+        'is_accepted': isAccepted,
+        'is_blocked': isRefused,
       };
 
   @override
   String toString() {
-    return 'MissionModel{id: $id, addressStart: $addressStart, addressEnd: $addressEnd, dateStart: $dateStart, price: $price, customerId: $customerId, driverId: $driverId}';
+    return 'MissionModel{id: $id, addressStart: $addressStart, addressEnd: $addressEnd, dateStart: $dateStart, price: $price, customerId: $customerId, driverId: $driverId, is_accepted}: $isAccepted, is_pending: $isPending, is_refused: $isRefused, detailOtherUserModel: $detailOtherUser';
   }
 }

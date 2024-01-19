@@ -32,7 +32,6 @@ class ChannelCard extends StatelessWidget {
                         "authId": authId,
                         "users": value
                       }));
-              ;
             },
             title: channelData.title != null
                 ? Text(channelData.title!.toCapitalized())

@@ -53,7 +53,7 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  OVTCTitle(title: "Contact list"),
+                                  OVTCTitle(title: "Contacts list"),
                                 ],
                               ),
                             ),
@@ -61,7 +61,7 @@ class ContactPage extends StatelessWidget {
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
-                                      "Empty contact list ! Add new contacts using the button at the bottom of the page.",
+                                      "List of contact empty ! Add new contacts using the button at the bottom of the page.",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                       ),
@@ -82,7 +82,6 @@ class ContactPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // OVTCTitle(title: "Contact request pending"),
                                   Text(
                                     "Contact request pending",
                                     textAlign: TextAlign.center,
@@ -98,7 +97,7 @@ class ContactPage extends StatelessWidget {
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
-                                      "Empty pending contact list !",
+                                      "List of pending contact requests empty !",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                       ),
@@ -130,7 +129,7 @@ class ContactPage extends StatelessWidget {
                                 ? const Expanded(
                                     flex: 1,
                                     child: Text(
-                                      "Empty blocked contact list !",
+                                      "List of blocked contact empty !",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                       ),

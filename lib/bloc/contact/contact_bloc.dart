@@ -59,8 +59,6 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
         accepted: event.accepted,
         blocked: event.blocked,
       );
-
-      // Envoi d'une requete de creation d'une conversation channels
     });
   }
 }
