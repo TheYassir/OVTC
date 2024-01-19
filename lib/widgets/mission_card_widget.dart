@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ovtc_app/bloc/app/app_bloc.dart';
-import 'package:ovtc_app/models/contact_model.dart';
 import 'package:ovtc_app/models/mission_model.dart';
 import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
