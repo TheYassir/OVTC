@@ -20,7 +20,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 errorMessage: onError.toString(),
                 isLoading: false,
               )));
-      ;
     });
 
     on<AuthLoginEvent>((AuthLoginEvent event, Emitter<AuthState> emit) async {
