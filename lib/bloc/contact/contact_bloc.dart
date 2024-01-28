@@ -51,7 +51,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     });
 
     on<ResponseContactEvent>(
-        (ResponseContactEvent event, Emitter<ContactState> emit) async {
+        (ResponseContactEvent event, Emitter<ContactState> emit) {
       ContactService.responseContact(
         userId: event.userId,
         otherUserId: event.otherUserId,

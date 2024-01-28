@@ -36,7 +36,7 @@ class ContactPendingCard extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const Text(
-                                      'How do you want to respond to this contact request?'),
+                                      'How do you want to respond to this contact request ?'),
                                   const SizedBox(height: 32),
                                   Row(
                                     mainAxisAlignment:

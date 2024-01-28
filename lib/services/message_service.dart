@@ -1,5 +1,7 @@
 import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/message_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -30,6 +32,29 @@ class MessageService {
       }
     } catch (e) {
       print("[MessageService] findAllDetailUsers: ${e.toString()}");
+      rethrow;
+    }
+  }
+
+  static Future sendMessage({
+    required String authId,
+    required String content,
+    required String channelId,
+  }) async {
+    try {
+      MessageModel newMessage = MessageModel(
+        id: const Uuid().v4(),
+        createdAt: DateTime.now(),
+        content: content,
+        contentType: null,
+        channelId: channelId,
+        userId: authId,
+      );
+
+      await supabase.from('messages').insert(newMessage.toJson());
+      print("[ChannelService] sendMessage send");
+    } catch (e) {
+      print("[ChannelService] sendMessage: ${e.toString()}");
       rethrow;
     }
   }

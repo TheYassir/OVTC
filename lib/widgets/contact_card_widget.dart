@@ -19,7 +19,7 @@ class ContactCard extends StatelessWidget {
             onTap: () => {
               context.showSnackBar(
                   message:
-                      "This feature has not yet been created. It will have to show informations Contact's and block ans deblock.")
+                      "This feature has not yet been created. It will have to show informations Contact's and block, deblock functionality.")
             },
             leading: data.detailOtherUser!.roleId == RoleModel().driverId
                 ? const Icon(

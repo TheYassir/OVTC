@@ -34,7 +34,7 @@ class ChannelCard extends StatelessWidget {
                       }));
             },
             title: channelData.title != null
-                ? Text(channelData.title!.toCapitalized())
+                ? Text(channelData.title!.toTitleCase())
                 : const Text("New channel"),
             subtitle: channelData.lastMessageId != null
                 ? Text(channelData.lastMessage!.content.toCapitalized())

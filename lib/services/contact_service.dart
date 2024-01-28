@@ -10,24 +10,26 @@ class ContactService {
   static Future<Map<String, List<ContactModel>>> getAllContacts(
       {required String userId}) async {
     try {
+      // Request all contact where userId is sender
       final List<Map<String, dynamic>> response = await supabase
           .from('contacts')
           .select('''*,detailOtherUser:receiver_id(id, first_name, last_name, role_id, email)''').eq(
               'sender_id', userId);
+
+      // Request all contact where userId is receiver
       final List<Map<String, dynamic>> receiverResponse = await supabase
           .from('contacts')
           .select('''*,detailOtherUser:sender_id(id, first_name, last_name, role_id, email)''').eq(
               'receiver_id', userId);
 
-      // print("Error on response : ${response.toString()}");
-      // print("Error on receiverResponse : ${receiverResponse.toString()}");
+      // Join all contacts
       response.addAll(receiverResponse);
 
+      // Transform Json data in ContactModel Dart
       final List<ContactModel> allContacts =
           response.map((contact) => ContactModel.fromJson(contact)).toList();
 
-      // print("Error on allContacts to list : ${allContacts.toString()}");
-
+      // Create 3 list of contact (contact, blocked, pending)
       final List<ContactModel> blockedContacts =
           (allContacts.where((element) => element.isBlocked == true)).toList();
       final List<ContactModel> pendingContacts =
@@ -35,12 +37,13 @@ class ContactService {
       final List<ContactModel> contacts = (allContacts.where((element) =>
           element.isAccepted == true && element.isBlocked == false)).toList();
 
+      // Create value to receive in BLOC
       final value = {
         "contacts": contacts,
         "pendingContacts": pendingContacts,
         "blockedContacts": blockedContacts
       };
-      // print("Error on value : ${value.toString()}");
+
       return value;
     } catch (e) {
       print("[ContactService] getAllContacts: ${e.toString()}");
@@ -134,7 +137,7 @@ class ContactService {
               userId: userId, otherUserId: otherUserId, title: title);
         } catch (e) {
           print("[ContactService]: Fullname");
-          Exception("500: Internal server error");
+          throw Exception("500: Internal server error");
         }
       }
     } catch (e) {

@@ -4,6 +4,7 @@ import 'package:ovtc_app/bloc/channel/channel_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/components/ovtc_title_widget.dart';
+import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/channel_card_widget.dart';
 
 class ChannelsPage extends StatelessWidget {
@@ -20,16 +21,8 @@ class ChannelsPage extends StatelessWidget {
         child:
             BlocConsumer<ChannelBloc, ChannelState>(listener: (context, state) {
           if (state.channelErrorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Center(
-                    child: Text(
-                  state.channelErrorMessage.toString(),
-                  style: const TextStyle(fontSize: 18),
-                )),
-                backgroundColor: Colors.red[900],
-              ),
-            );
+            context.showErrorSnackBar(
+                message: state.channelErrorMessage.toString());
           }
         }, builder: (context, state) {
           return Scaffold(
