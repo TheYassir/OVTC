@@ -43,7 +43,7 @@ class MissionService {
         "refusedMissions": null,
         "contacts": allContacts["contacts"],
       };
-      print("Sent data : ${valueIfNotMission.toString()}");
+      // print("Sent data : ${valueIfNotMission.toString()}");
       if (responseAllMissions.isEmpty) {
         return valueIfNotMission;
       }

@@ -1,4 +1,5 @@
 import 'package:ovtc_app/models/driver_model.dart';
+import 'package:ovtc_app/models/role_model.dart';
 import 'package:ovtc_app/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,7 +20,7 @@ class UserService {
       DriverModel? driver;
       final List<Object?> data = [user, null];
 
-      if (user.roleId != "9cf60c0b-7920-40f1-a693-4f6c0a0c581a") {
+      if (user.roleId == RoleModel().customerId) {
         return data;
       }
 

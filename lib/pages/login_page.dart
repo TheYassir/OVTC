@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        _emailController.text = "miaaaou78@gmail.com";
-        _passwordController.text = "rissay78";
+        // _emailController.text = "miaaaou78@gmail.com";
+        // _passwordController.text = "rissay78";
         if (state.auth != null) {
           context.go(OVTCRouter.home, extra: state.auth!.id);
         }
