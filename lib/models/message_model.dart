@@ -1,12 +1,14 @@
-class MessageModel {
-  String id;
-  DateTime createdAt;
-  String content;
-  String? contentType;
-  String userId;
-  String channelId;
+import 'package:equatable/equatable.dart';
 
-  MessageModel({
+class MessageModel extends Equatable {
+  final String id;
+  final DateTime createdAt;
+  final String content;
+  final String? contentType;
+  final String userId;
+  final String channelId;
+
+  const MessageModel({
     required this.id,
     required this.createdAt,
     required this.content,
@@ -39,4 +41,8 @@ class MessageModel {
   String toString() {
     return 'MessageModel{id: $id, createdAt: $createdAt, content: $content, contentType: $contentType, userId: $userId, channelId: $channelId}';
   }
+
+  @override
+  List<Object?> get props =>
+      [id, createdAt, content, contentType, userId, channelId];
 }

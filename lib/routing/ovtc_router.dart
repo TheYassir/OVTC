@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:ovtc_app/models/channel_model.dart';
 import 'package:ovtc_app/models/contact_model.dart';
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 import 'package:ovtc_app/pages/account_page.dart';
 import 'package:ovtc_app/pages/add_contact_page.dart';
 import 'package:ovtc_app/pages/contact_page.dart';

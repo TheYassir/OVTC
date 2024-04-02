@@ -1,4 +1,4 @@
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 
 class MissionModel {
   String id;

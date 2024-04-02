@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 import 'package:ovtc_app/models/message_model.dart';
 import 'package:ovtc_app/utils/triangle_painter_message.dart';
 import 'dart:math' as math;

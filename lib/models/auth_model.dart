@@ -1,8 +1,10 @@
-class AuthModel {
-  String id;
-  String email;
+import 'package:equatable/equatable.dart';
 
-  AuthModel({
+class AuthModel extends Equatable {
+  final String id;
+  final String email;
+
+  const AuthModel({
     required this.id,
     required this.email,
   });
@@ -23,4 +25,7 @@ class AuthModel {
   String toString() {
     return 'AuthModel{id: $id, email: $email}';
   }
+
+  @override
+  List<Object?> get props => [id, email];
 }
