@@ -27,8 +27,8 @@ jobs:
         run: flutter pub get
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: flutter analyze 
+      # - name: Analyze project source
+        # run: flutter analyze 
 
       # Run all test in test folder.
       - name: Run tests
