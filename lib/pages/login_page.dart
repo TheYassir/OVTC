@@ -77,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                        key: const Key("input_email"),
                         controller: _emailController,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -105,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                         )),
                     const SizedBox(height: 10),
                     TextFormField(
+                        key: const Key("input_password"),
                         controller: _passwordController,
                         obscureText: true,
                         autocorrect: false,
@@ -143,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                     authState.isLoading
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
+                            key: const Key("button_submit"),
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(50),
                             ),

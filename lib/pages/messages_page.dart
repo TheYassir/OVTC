@@ -6,7 +6,7 @@ import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/components/ovtc_title_widget.dart';
 import 'package:ovtc_app/models/channel_model.dart';
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 import 'package:ovtc_app/models/message_model.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/message_bar_widget.dart';

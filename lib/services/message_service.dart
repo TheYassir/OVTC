@@ -1,4 +1,4 @@
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 import 'package:ovtc_app/models/message_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';

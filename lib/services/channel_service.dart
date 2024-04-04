@@ -48,7 +48,7 @@ class ChannelService {
     }
   }
 
-  static Future<List<ChannelModel>?> getAllChannels({
+  Future<List<ChannelModel>?> getAllChannels({
     required String authId,
   }) async {
     try {

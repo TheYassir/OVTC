@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:ovtc_app/models/message_model.dart';
 
-class ChannelModel {
-  String id;
-  DateTime lastUpdate;
-  String? title;
-  String? lastMessageId;
+class ChannelModel extends Equatable {
+  final String id;
+  final DateTime lastUpdate;
+  final String? title;
+  final String? lastMessageId;
   MessageModel? lastMessage;
 
   ChannelModel({
@@ -35,4 +36,8 @@ class ChannelModel {
   String toString() {
     return 'ChannelModel{id: $id, lastUpdate: $lastUpdate, title: $title, lastMessageId: $lastMessageId, lastMessage: $lastMessage}';
   }
+
+  @override
+  List<Object?> get props =>
+      [id, lastUpdate, title, lastMessageId, lastMessage];
 }

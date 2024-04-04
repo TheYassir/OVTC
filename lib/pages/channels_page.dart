@@ -4,6 +4,7 @@ import 'package:ovtc_app/bloc/channel/channel_bloc.dart';
 import 'package:ovtc_app/components/OVTC_appbar.dart';
 import 'package:ovtc_app/components/ovtc_bottombar.dart';
 import 'package:ovtc_app/components/ovtc_title_widget.dart';
+import 'package:ovtc_app/services/channel_service.dart';
 import 'package:ovtc_app/utils/snackbar_show_extension.dart';
 import 'package:ovtc_app/widgets/channel_card_widget.dart';
 
@@ -16,8 +17,8 @@ class ChannelsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         lazy: false,
-        create: (context) =>
-            ChannelBloc()..add(LoadAllChannelsEvent(authId: authId)),
+        create: (context) => ChannelBloc(service: ChannelService())
+          ..add(LoadAllChannelsEvent(authId: authId)),
         child:
             BlocConsumer<ChannelBloc, ChannelState>(listener: (context, state) {
           if (state.channelErrorMessage != null) {

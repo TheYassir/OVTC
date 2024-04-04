@@ -1,3 +1,5 @@
+<a href="https://github.com/TheYassir/OVTC/actions"><img src="https://github.com/TheYassir/OVTC/workflows/test-my-app/badge.svg" alt="Build Status"></a>
+
 # ovtc_app
 
 A new Flutter project.

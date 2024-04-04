@@ -1,16 +1,17 @@
-import 'package:ovtc_app/models/detail_other_user.dart';
+import 'package:equatable/equatable.dart';
+import 'package:ovtc_app/models/detail_other_user_model.dart';
 
-class ContactModel {
-  String id;
-  DateTime createdAt;
-  bool isPending;
-  bool isAccepted;
-  bool isBlocked;
-  String senderId;
-  String receiverId;
-  DetailOtherUserModel? detailOtherUser;
+class ContactModel extends Equatable {
+  final String id;
+  final DateTime createdAt;
+  final bool isPending;
+  final bool isAccepted;
+  final bool isBlocked;
+  final String senderId;
+  final String receiverId;
+  final DetailOtherUserModel? detailOtherUser;
 
-  ContactModel({
+  const ContactModel({
     required this.id,
     required this.createdAt,
     required this.isPending,
@@ -48,4 +49,16 @@ class ContactModel {
   String toString() {
     return 'ContactModel{id: $id, createdAt: $createdAt, isPending: $isPending,isAccepted: $isAccepted, isBlocked: $isBlocked, senderId: $senderId, receiverId: $receiverId, detailOtherUserModel: $detailOtherUser}';
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        isPending,
+        isAccepted,
+        isBlocked,
+        senderId,
+        receiverId,
+        detailOtherUser
+      ];
 }
