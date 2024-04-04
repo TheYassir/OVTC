@@ -8,14 +8,16 @@ part 'channel_event.dart';
 part 'channel_state.dart';
 
 class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
-  ChannelBloc() : super(const ChannelInitialState()) {
+  ChannelBloc({required ChannelService service})
+      : super(const ChannelInitialState()) {
     on<LoadAllChannelsEvent>(
         (LoadAllChannelsEvent event, Emitter<ChannelState> emit) async {
       emit(state.copyWith(isLoading: true));
 
-      await ChannelService.getAllChannels(
-        authId: event.authId,
-      )
+      await service
+          .getAllChannels(
+            authId: event.authId,
+          )
           .then((value) => emit(state.copyWith(
                 channels: value,
                 isLoading: false,
